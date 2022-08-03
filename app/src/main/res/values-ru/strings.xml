@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">НеРецепт</string>
+    <string name="user_avatar_description">Аватар пользователя</string>
+    <string name="preview">Предпросмотр</string>
+    <string name="add_recipe">Добавить рецепт</string>
+    <string name="menu_button">Меню</string>
+    <string name="remove">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="apply">Применить</string>
+    <string name="cancel">Отмена</string>
+    <string name="enter_title">Придумайте заголовок</string>
+    <string name="favorite">Избранное</string>
+    <string name="enter_recipe">Опишите рецепт</string>
+    <string name="title_favorite">Избранное</string>
+    <string name="title_book">Книга</string>
+    <string name="title_new_or_edit">Новый / Редактировать</string>
+    <string name="title_recipe">Рецепт</string>
+    <string name="filter">Фильтр</string>
+    <string name="search">Поиск</string>
+    <string name="title_categories_fragment">Категории</string>
+    <string name="add_next_step">Добавить шаг</string>
+</resources>

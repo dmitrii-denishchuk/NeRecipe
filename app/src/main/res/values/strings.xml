@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">NeRecipe</string>
+    <string name="title_book">Book</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_new_or_edit">New / Edit</string>
+    <string name="title_recipe">Recipe</string>
+    <string name="user_avatar_description">User avatar</string>
+    <string name="preview">Preview</string>
+    <string name="add_recipe">Add recipe</string>
+    <string name="menu_button">Menu</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_title">Enter title</string>
+    <string name="favorite">Favorite</string>
+    <string name="enter_recipe">Enter recipe</string>
+    <string name="filter">Filter</string>
+    <string name="search">Search</string>
+    <string name="title_categories_fragment">Categories</string>
+    <string name="add_next_step">Add next step</string>
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_gravity="end"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_categories"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/europa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Европейская"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/asia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Азиатская"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/europa" />
+
+    <CheckBox
+        android:id="@+id/panasia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Паназиатская"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/asia" />
+
+    <CheckBox
+        android:id="@+id/east"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Восточная"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/panasia" />
+
+    <CheckBox
+        android:id="@+id/america"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Американская"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/east" />
+
+    <CheckBox
+        android:id="@+id/russia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Русская"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/america" />
+
+    <CheckBox
+        android:id="@+id/mediterran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_common_spacing"
+        android:checked="true"
+        android:text="Средиземноморская"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/russia" />
+
+</LinearLayout>

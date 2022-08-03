@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingHorizontal="@dimen/big_common_spacing"
+    android:paddingTop="@dimen/big_common_spacing">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/teal_700"
+        android:contentDescription="@string/preview"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_banner_foreground" />
+
+    <ImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="@dimen/icons_size"
+        android:layout_height="@dimen/icons_size"
+        android:layout_margin="@dimen/middle_common_spacing"
+        android:contentDescription="@string/user_avatar_description"
+        app:layout_constraintBottom_toBottomOf="@id/author"
+        app:layout_constraintStart_toStartOf="@id/background"
+        app:layout_constraintTop_toTopOf="@id/author"
+        app:srcCompat="@drawable/ic_baseline_person_24" />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/middle_common_spacing"
+        android:ellipsize="end"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@id/menu_button"
+        app:layout_constraintEnd_toStartOf="@id/menu_button"
+        app:layout_constraintStart_toEndOf="@id/user_avatar"
+        app:layout_constraintTop_toTopOf="@id/menu_button"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/menu_button"
+        style="@style/Widget.AppTheme.menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:contentDescription="@string/menu_button"
+        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintTop_toTopOf="@id/background" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/recipe_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="preview_category, preview_title_recipe" />
+
+    <TextView
+        android:id="@+id/preview_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:hint="Категория"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/preview_title_recipe"
+        app:layout_constraintStart_toStartOf="@id/preview_title_recipe" />
+
+    <TextView
+        android:id="@+id/preview_title_recipe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/middle_common_spacing"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:hint="Название"
+        android:textSize="@dimen/title_recipe_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/favorite_button"
+        app:layout_constraintEnd_toStartOf="@id/favorite_button"
+        app:layout_constraintStart_toStartOf="@id/background"
+        app:layout_constraintTop_toTopOf="@id/favorite_button"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/favorite_button"
+        style="@style/Widget.AppTheme.favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:contentDescription="@string/favorite"
+        app:layout_constraintBottom_toBottomOf="@id/background"
+        app:layout_constraintEnd_toEndOf="@id/background" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/recipe_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="view_category, view_title_recipe, recipe_recycler_view" />
+
+    <TextView
+        android:id="@+id/view_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/middle_common_spacing"
+        android:ellipsize="end"
+        android:hint="Категория"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@id/favorite_button"
+        app:layout_constraintStart_toStartOf="@id/view_title_recipe"
+        app:layout_constraintTop_toTopOf="@id/favorite_button" />
+
+    <TextView
+        android:id="@+id/view_title_recipe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_common_spacing"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:hint="Название"
+        android:textSize="@dimen/title_recipe_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipe_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/view_title_recipe"
+        tools:listitem="@layout/recipe_content_layout" />
+
+    <TextView
+        android:id="@+id/view_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
