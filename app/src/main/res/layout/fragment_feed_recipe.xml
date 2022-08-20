@@ -7,7 +7,7 @@
     tools:context=".ui.FeedFragment">
 
     <ImageView
-        android:id="@+id/empty_background"
+        android:id="@+id/emptyBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/empty"
@@ -20,14 +20,14 @@
         app:tint="@color/primaryColor" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/view_recipe_recycler"
+        android:id="@+id/viewRecipeRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/fragment_recipe_view" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_recipe_button"
+        android:id="@+id/addRecipeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_12dp"

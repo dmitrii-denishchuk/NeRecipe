@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nerecipe.R
 import ru.netology.nerecipe.adapter.RecipeAdapter
 import ru.netology.nerecipe.clickListeners.RecipeClickListeners
-import ru.netology.nerecipe.databinding.FragmentFavoriteBinding
+import ru.netology.nerecipe.databinding.FragmentFeedRecipeBinding
 import ru.netology.nerecipe.dragAndDropHelpers.OnStartDragListener
 import ru.netology.nerecipe.recipe.Recipe
 import ru.netology.nerecipe.viewModel.RecipeViewModel
@@ -28,7 +28,7 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        val binding = FragmentFeedRecipeBinding.inflate(inflater, container, false)
         val viewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         val adapter = RecipeAdapter(object : RecipeClickListeners {

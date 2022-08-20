@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/background"
+            android:id="@+id/recipeViewBackground"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:contentDescription="@string/preview"
@@ -28,13 +28,13 @@
             app:tint="@color/primaryColor" />
 
         <ImageView
-            android:id="@+id/user_avatar"
+            android:id="@+id/userAvatar"
             android:layout_width="@dimen/icons_size_24dp"
             android:layout_height="@dimen/icons_size_24dp"
             android:layout_margin="@dimen/spacing_12dp"
             android:contentDescription="@string/user_avatar_description"
             app:layout_constraintBottom_toBottomOf="@id/author"
-            app:layout_constraintStart_toStartOf="@id/background"
+            app:layout_constraintStart_toStartOf="@id/recipeViewBackground"
             app:layout_constraintTop_toTopOf="@id/author"
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
@@ -46,33 +46,33 @@
             android:ellipsize="end"
             android:hint="Автор"
             android:singleLine="true"
-            app:layout_constraintBottom_toBottomOf="@id/menu_button"
-            app:layout_constraintEnd_toStartOf="@id/menu_button"
-            app:layout_constraintStart_toEndOf="@id/user_avatar"
-            app:layout_constraintTop_toTopOf="@id/menu_button" />
+            app:layout_constraintBottom_toBottomOf="@id/menuButton"
+            app:layout_constraintEnd_toStartOf="@id/menuButton"
+            app:layout_constraintStart_toEndOf="@id/userAvatar"
+            app:layout_constraintTop_toTopOf="@id/menuButton" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menu_button"
+            android:id="@+id/menuButton"
             style="@style/Widget.AppTheme.menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:contentDescription="@string/menu_button"
-            app:layout_constraintEnd_toEndOf="@id/background"
-            app:layout_constraintTop_toTopOf="@id/background" />
+            app:layout_constraintEnd_toEndOf="@id/recipeViewBackground"
+            app:layout_constraintTop_toTopOf="@id/recipeViewBackground" />
 
         <TextView
-            android:id="@+id/preview_category"
+            android:id="@+id/recipeViewCategory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:hint="Категория"
             android:singleLine="true"
-            app:layout_constraintBottom_toTopOf="@id/preview_title_recipe"
-            app:layout_constraintStart_toStartOf="@id/preview_title_recipe" />
+            app:layout_constraintBottom_toTopOf="@id/recipeViewTitle"
+            app:layout_constraintStart_toStartOf="@id/recipeViewTitle" />
 
         <TextView
-            android:id="@+id/preview_title_recipe"
+            android:id="@+id/recipeViewTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_12dp"
@@ -81,30 +81,30 @@
             android:hint="Название"
             android:textSize="@dimen/title_text_size_24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/favorite_button"
-            app:layout_constraintEnd_toStartOf="@id/favorite_button"
-            app:layout_constraintStart_toStartOf="@id/background"
-            app:layout_constraintTop_toTopOf="@id/favorite_button"
+            app:layout_constraintBottom_toBottomOf="@id/favoriteButton"
+            app:layout_constraintEnd_toStartOf="@id/favoriteButton"
+            app:layout_constraintStart_toStartOf="@id/recipeViewBackground"
+            app:layout_constraintTop_toTopOf="@id/favoriteButton"
             app:layout_constraintVertical_chainStyle="spread" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/favorite_button"
+            android:id="@+id/favoriteButton"
             style="@style/Widget.AppTheme.favorite_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:contentDescription="@string/favorite"
-            app:layout_constraintBottom_toBottomOf="@id/background"
-            app:layout_constraintEnd_toEndOf="@id/background" />
+            app:layout_constraintBottom_toBottomOf="@id/recipeViewBackground"
+            app:layout_constraintEnd_toEndOf="@id/recipeViewBackground" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipe_content_layout"
+            android:id="@+id/recipeContentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/background"
+            app:layout_constraintTop_toBottomOf="@id/recipeViewBackground"
             tools:listitem="@layout/recipe_content_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

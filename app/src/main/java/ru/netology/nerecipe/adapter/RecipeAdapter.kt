@@ -86,7 +86,7 @@ class RecipeAdapter(
                 clickListener.clickedFavorite(recipe)
             }
 
-            binding.background.setOnClickListener {
+            binding.recipeViewBackground.setOnClickListener {
                 clickListener.clickedRecipe(recipe)
             }
 
@@ -98,14 +98,14 @@ class RecipeAdapter(
         fun bind(recipe: Recipe) {
             this.recipe = recipe
             with(binding) {
-                previewTitleRecipe.text = recipe.title
-                previewCategory.text = recipe.category
+                recipeViewTitle.text = recipe.title
+                recipeViewCategory.text = recipe.category
                 author.text = recipe.author
                 favoriteButton.isChecked = recipe.isFavorite
                 if (recipe.picture.isNotBlank())
-                    background.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
+                    recipeViewBackground.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
                 else
-                    background.setImageResource(R.drawable.ic_launcher_foreground)
+                    recipeViewBackground.setImageResource(R.drawable.ic_launcher_foreground)
             }
         }
     }

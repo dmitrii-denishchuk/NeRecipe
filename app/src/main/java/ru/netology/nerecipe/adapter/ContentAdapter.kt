@@ -85,9 +85,9 @@ class ContentAdapter(
                 stepName.setText(content.step)
                 viewContent.setText(content.content)
                 if (content.picture.isNotBlank())
-                    background.setImageBitmap(BitmapFactory.decodeFile(content.picture))
+                    recipeViewBackground.setImageBitmap(BitmapFactory.decodeFile(content.picture))
                 else
-                    background.setImageResource(R.drawable.ic_launcher_foreground)
+                    recipeViewBackground.setImageResource(R.drawable.ic_launcher_foreground)
             }
         }
     }
@@ -130,9 +130,10 @@ class ContentAdapter(
                 stepName.text = content.step
                 viewContent.text = content.content
                 if (content.picture.isNotBlank())
-                    background.setImageBitmap(BitmapFactory.decodeFile(content.picture))
+                    recipeViewBackground.setImageBitmap(BitmapFactory.decodeFile(content.picture))
                 else
-                    background.setImageResource(R.drawable.ic_launcher_foreground)
+                    recipeViewBackground.setImageResource(R.drawable.ic_launcher_foreground)
+                viewContent
             }
         }
     }

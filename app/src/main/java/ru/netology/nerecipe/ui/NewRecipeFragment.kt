@@ -4,7 +4,6 @@ import android.R
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.text.Editable
 import android.text.Selection
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +38,7 @@ class NewRecipeFragment : Fragment() {
     lateinit var stepName: EditText
     lateinit var content: EditText
     lateinit var picture: ImageView
+    lateinit var category: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,10 +48,9 @@ class NewRecipeFragment : Fragment() {
         val bindingTitle = FragmentNewRecipeBinding.inflate(inflater, container, false)
         val bindingContent = RecipeContentEditLayoutBinding.inflate(inflater, container, false)
 
-        val stepp = ""
         stepName = bindingContent.stepName
         content = bindingContent.viewContent
-        picture = bindingContent.background
+        picture = bindingContent.recipeViewBackground
 
         val recipeViewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
         val contentAdapter = ContentAdapter(object : ContentClickListeners {
@@ -89,7 +88,7 @@ class NewRecipeFragment : Fragment() {
                 ) {
 
                     val item = parent.getItemAtPosition(position) as String
-                    bindingTitle.category.text = item
+                    category = item
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -106,11 +105,11 @@ class NewRecipeFragment : Fragment() {
 
         val image = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
             val path = it ?: return@registerForActivityResult
-            bindingTitle.background.tag = path
-            bindingTitle.background.setImageURI(path)
+            bindingTitle.recipeViewBackground.tag = path
+            bindingTitle.recipeViewBackground.setImageURI(path)
         }
 
-        bindingTitle.background.setOnClickListener {
+        bindingTitle.recipeViewBackground.setOnClickListener {
             image.launch(arrayOf("image/*"))
         }
 
@@ -126,27 +125,27 @@ class NewRecipeFragment : Fragment() {
         }
 
         bindingTitle.okButton.setOnClickListener {
-            while (bindingTitle.titleRecipe.text.isNullOrBlank()) {
+            while (bindingTitle.editableTitleRecipe.text.isNullOrBlank()) {
                 Toast.makeText(context, "Заполни заголовок", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             recipeViewModel.clickedSave(
                 Recipe(
                     content = recipeViewModel.currentContentList,
-                    title = bindingTitle.titleRecipe.text.toString(),
-                    category = bindingTitle.category.text.toString(),
+                    title = bindingTitle.editableTitleRecipe.text.toString(),
+                    category = category,
                     picture =
-                    if (bindingTitle.background.tag == null) ""
-                    else savePicture(bindingTitle.background)
+                    if (bindingTitle.recipeViewBackground.tag == null) ""
+                    else savePicture(bindingTitle.recipeViewBackground)
                 )
             )
-            bindingTitle.titleRecipe.hideKeyboard()
+            bindingTitle.editableTitleRecipe.hideKeyboard()
             findNavController().navigateUp()
         }
 
         bindingTitle.cancelButton.setOnClickListener {
             recipeViewModel.currentRecipe.value = null
-            bindingTitle.titleRecipe.hideKeyboard()
+            bindingTitle.editableTitleRecipe.hideKeyboard()
             findNavController().navigateUp()
         }
 
@@ -157,11 +156,11 @@ class NewRecipeFragment : Fragment() {
 //            }
             recipeViewModel.clickedSaveContent(
                 Recipe(
-                    title = bindingTitle.titleRecipe.text.toString(),
-                    category = bindingTitle.category.text.toString(),
+                    title = bindingTitle.editableTitleRecipe.text.toString(),
+                    category = category,
                     picture =
-                    if (bindingTitle.background.tag == null) ""
-                    else savePicture(bindingTitle.background)
+                    if (bindingTitle.recipeViewBackground.tag == null) ""
+                    else savePicture(bindingTitle.recipeViewBackground)
                 ), Content(
                     id = -1,
                     step = stepName.text.toString(),
@@ -178,9 +177,8 @@ class NewRecipeFragment : Fragment() {
         recipeViewModel.currentRecipe.observe(viewLifecycleOwner) {
             contentAdapter.submitList(it?.content)
             with(bindingTitle) {
-                background.setImageURI(recipeViewModel.currentRecipe.value?.picture?.toUri())
-                category.text = recipeViewModel.currentRecipe.value?.category
-                with(titleRecipe) {
+                recipeViewBackground.setImageURI(recipeViewModel.currentRecipe.value?.picture?.toUri())
+                with(editableTitleRecipe) {
                     setText(recipeViewModel.currentRecipe.value?.title)
                     requestFocus()
                     showKeyboard()

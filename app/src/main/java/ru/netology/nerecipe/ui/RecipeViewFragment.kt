@@ -80,36 +80,12 @@ class RecipeViewFragment : Fragment() {
             }
         )
 
-//        val contentViewHolder =
-//            ContentAdapter.ContentViewHolder(binding.recipeCardLayout, object : RecipeClickListeners {
-//                override fun clickedFavorite(recipe: Recipe) {
-//                    viewModel.clickedFavorite(recipe)
-//                }
-//
-//                override fun clickedRemove(recipe: Recipe) {
-//                    viewModel.clickedRemove(recipe)
-//                    findNavController().navigateUp()
-//                }
-//
-//                override fun clickedEdit(recipe: Recipe) {
-//                    viewModel.clickedEdit(recipe)
-//                    findNavController().navigate(
-//                        R.id.action_recipe_view_fragment_to_new_recipe_fragment,
-//                        bundleOf("content" to recipe.content)
-//                    )
-//                }
-//
-//                override fun clickedRecipe(recipe: Recipe) {
-//                }
-//            }
-//            )
-
-
         binding.recipeContentLayout.adapter = contentAdapter
 
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             val recipe = recipes.firstOrNull { it.id == arguments?.getLong("id") } ?: Recipe()
             recipeViewHolder.bind(recipe)
+            contentAdapter.submitList(recipe.content)
         }
 
         return binding.root

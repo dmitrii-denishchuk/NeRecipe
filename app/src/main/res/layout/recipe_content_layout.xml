@@ -14,24 +14,25 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/step_name"
+            android:id="@+id/stepName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_12dp"
             android:layout_marginTop="@dimen/spacing_12dp"
             android:background="@null"
+            android:gravity="fill_horizontal|center"
             android:hint="Шаг"
             android:minHeight="24dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/menu_button"
+            app:layout_constraintEnd_toStartOf="@id/menuButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/step_name">
+            app:layout_constraintTop_toBottomOf="@id/stepName">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                 android:paddingVertical="@dimen/spacing_12dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/background_card"
+                    android:id="@+id/backgroundCard"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="@dimen/spacing_12dp"
@@ -53,14 +54,14 @@
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/content_card"
+                            android:id="@+id/contentCard"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="@dimen/spacing_12dp"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
-                                android:id="@+id/view_content"
+                                android:id="@+id/viewContent"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
@@ -72,7 +73,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <ImageView
-                            android:id="@+id/background"
+                            android:id="@+id/recipeViewBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-48dp"
@@ -81,7 +82,7 @@
                             android:paddingTop="148dp"
                             android:paddingBottom="100dp"
                             android:scaleType="centerCrop"
-                            app:layout_constraintTop_toBottomOf="@id/content_card"
+                            app:layout_constraintTop_toBottomOf="@id/contentCard"
                             app:srcCompat="@drawable/ic_launcher_foreground"
                             app:tint="@color/primaryColor" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -90,7 +91,7 @@
         </ScrollView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menu_button"
+            android:id="@+id/menuButton"
             style="@style/Widget.AppTheme.menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
