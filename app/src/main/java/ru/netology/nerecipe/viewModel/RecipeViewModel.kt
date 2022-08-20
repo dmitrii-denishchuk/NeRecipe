@@ -22,16 +22,18 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
     val data get() = repository.data
     val currentRecipe = MutableLiveData<Recipe?>(null)
     val currentContentList = mutableListOf<Content>()
+    var filteredRecipes = MutableLiveData<List<Recipe>>()
+    var checkboxesState = booleanArrayOf()
 
     fun clickedSave(recipe: Recipe) {
         if (recipe.title.isBlank()) return
         val someRecipe = currentRecipe.value?.copy(
-            content = recipe.content,
+            content = recipe.content.filterNot { it.id < 0 },
             title = recipe.title,
             category = recipe.category,
             picture = recipe.picture
         ) ?: Recipe(
-            content = recipe.content,
+            content = recipe.content.filterNot { it.id < 0 },
             title = recipe.title,
             category = recipe.category,
             picture = recipe.picture
@@ -41,17 +43,37 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
         currentContentList.clear()
     }
 
-    fun clickedSaveContent(content: Content) {
-        if (content.content.isBlank()) return
-        currentContentList.plus(
-            currentRecipe.value?.id?.let { convert(it) }?.let {
-                Content(
-                    id = it,
-                    content = content.content,
-                    picture = content.picture
-                )
-            }
+    fun clickedSaveContent(recipe: Recipe, content: Content) {
+        currentContentList.add(
+            Content(
+                id = currentContentList.size,
+                step = content.step,
+                content = content.content,
+                picture = content.picture
+            )
         )
+//        currentRecipe.value?.id?.let { convert(it) } ?.let {
+//            Content(
+//                id = it,
+//                step = content.step,
+//                content = content.content,
+//                picture = content.picture
+//            )} ?.let { currentContentList.add(it) }
+        currentContentList.add(Content(0, "", "", ""))
+        currentRecipe.value = currentRecipe.value?.copy(
+            title = recipe.title,
+            category = recipe.category,
+            picture = recipe.picture,
+            content = currentContentList
+        )
+    }
+
+    fun plusRecipe(recipes: List<Recipe>) {
+        filteredRecipes.value = filteredRecipes.value?.plus(recipes)
+    }
+
+    fun minusRecipe(recipes: List<Recipe>) {
+        filteredRecipes.value = filteredRecipes.value?.minus(recipes)
     }
 
     override fun clickedFavorite(recipe: Recipe) = repository.favoriteById(recipe.id)

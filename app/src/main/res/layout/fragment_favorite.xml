@@ -4,13 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:context=".ui.FavoriteFragment">
+    tools:context=".ui.FeedFragment">
+
+    <ImageView
+        android:id="@+id/empty_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/empty"
+        android:src="@drawable/ic_baseline_no_food_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/primaryColor" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipe_recycler_view"
+        android:id="@+id/view_recipe_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/recipe_card_layout" />
+        tools:listitem="@layout/fragment_recipe_view" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_recipe_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_12dp"
+        android:contentDescription="@string/add_recipe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

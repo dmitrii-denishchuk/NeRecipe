@@ -36,8 +36,7 @@ class RecipeViewFragment : Fragment() {
             false
         )
 
-        binding.recipeCardLayout.recipeView.visibility = View.VISIBLE
-        binding.recipeCardLayout.recipePreview.visibility = View.GONE
+        binding.recipeContentLayout.visibility = View.VISIBLE
 
         val viewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
@@ -57,8 +56,8 @@ class RecipeViewFragment : Fragment() {
                 }
             })
 
-        val viewHolder =
-            RecipeAdapter.ViewHolder(binding.recipeCardLayout, object : RecipeClickListeners {
+        val recipeViewHolder =
+            RecipeAdapter.ViewHolder(binding, object : RecipeClickListeners {
                 override fun clickedFavorite(recipe: Recipe) {
                     viewModel.clickedFavorite(recipe)
                 }
@@ -81,11 +80,36 @@ class RecipeViewFragment : Fragment() {
             }
         )
 
-        binding.recipeCardLayout.recipeRecyclerView.adapter = contentAdapter
+//        val contentViewHolder =
+//            ContentAdapter.ContentViewHolder(binding.recipeCardLayout, object : RecipeClickListeners {
+//                override fun clickedFavorite(recipe: Recipe) {
+//                    viewModel.clickedFavorite(recipe)
+//                }
+//
+//                override fun clickedRemove(recipe: Recipe) {
+//                    viewModel.clickedRemove(recipe)
+//                    findNavController().navigateUp()
+//                }
+//
+//                override fun clickedEdit(recipe: Recipe) {
+//                    viewModel.clickedEdit(recipe)
+//                    findNavController().navigate(
+//                        R.id.action_recipe_view_fragment_to_new_recipe_fragment,
+//                        bundleOf("content" to recipe.content)
+//                    )
+//                }
+//
+//                override fun clickedRecipe(recipe: Recipe) {
+//                }
+//            }
+//            )
+
+
+        binding.recipeContentLayout.adapter = contentAdapter
 
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             val recipe = recipes.firstOrNull { it.id == arguments?.getLong("id") } ?: Recipe()
-            viewHolder.bind(recipe)
+            recipeViewHolder.bind(recipe)
         }
 
         return binding.root

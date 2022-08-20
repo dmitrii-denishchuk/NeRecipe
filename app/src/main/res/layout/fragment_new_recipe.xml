@@ -1,12 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.NewRecipeFragment">
+    app:cardCornerRadius="@dimen/spacing_12dp"
+    app:cardElevation="@dimen/elevation_4dp">
 
-    <include
-        android:id="@+id/new_recipe_layout"
-        layout="@layout/new_recipe_layout" />
-</ScrollView>
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/back_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/spacing_12dp"
+        app:cardCornerRadius="@dimen/spacing_12dp"
+        app:cardElevation="@dimen/elevation_4dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/content_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_12dp"
+                app:cardCornerRadius="@dimen/spacing_12dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <EditText
+                    android:id="@+id/title_recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="fill_horizontal|center"
+                    android:hint="Придумай название"
+                    android:inputType="textCapSentences"
+                    android:minHeight="48dp"
+                    android:padding="4dp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/secondaryColor"
+                android:contentDescription="@string/preview"
+                android:paddingTop="36dp"
+                android:paddingBottom="84dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+                app:tint="@color/primaryColor" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_12dp"
+        app:cardCornerRadius="@dimen/spacing_12dp"
+        app:cardElevation="@dimen/elevation_4dp"
+        app:layout_constraintTop_toBottomOf="@id/back_card">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="36dp"
+            app:layout_constraintEnd_toEndOf="@id/back_card"
+            app:layout_constraintStart_toStartOf="@id/back_card"
+            app:layout_constraintTop_toBottomOf="@id/back_card" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipe_content_edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_spinner"
+        tools:listitem="@layout/recipe_content_edit_layout" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_button"
+        style="@style/Widget.AppTheme.add_step_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_12dp"
+        android:layout_marginEnd="@dimen/icons_size_24dp"
+        android:contentDescription="@string/add_next_step"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="@id/recipe_content_edit_layout"
+        app:layout_constraintTop_toTopOf="@id/recipe_content_edit_layout"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ok_button"
+        style="@style/Widget.AppTheme.apply_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_12dp"
+        android:contentDescription="@string/apply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_check_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_12dp"
+        android:contentDescription="@string/cancel"
+        app:layout_constraintBottom_toTopOf="@id/ok_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_close_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

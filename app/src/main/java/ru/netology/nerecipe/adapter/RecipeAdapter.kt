@@ -1,15 +1,15 @@
 package ru.netology.nerecipe.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nerecipe.R
 import ru.netology.nerecipe.clickListeners.RecipeClickListeners
-import ru.netology.nerecipe.databinding.RecipeCardLayoutBinding
+import ru.netology.nerecipe.databinding.FragmentRecipeViewBinding
 import ru.netology.nerecipe.dragAndDropHelpers.ItemTouchHelperAdapter
 import ru.netology.nerecipe.dragAndDropHelpers.OnStartDragListener
 import ru.netology.nerecipe.recipe.Recipe
@@ -21,7 +21,7 @@ class RecipeAdapter(
 ) : ListAdapter<Recipe, RecipeAdapter.ViewHolder>(DiffCallback), ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RecipeCardLayoutBinding.inflate(
+        val binding = FragmentRecipeViewBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding, clickListener)
@@ -41,18 +41,22 @@ class RecipeAdapter(
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-        Collections.swap(currentList, fromPosition, toPosition)
+        val updated = currentList.toMutableList()
+        Collections.swap(updated, fromPosition, toPosition)
+        submitList(updated)
         notifyItemMoved(fromPosition, toPosition)
         return true
     }
 
     override fun onItemDismiss(position: Int) {
-        currentList.removeAt(position)
+        val updated = currentList.toMutableList()
+        updated.removeAt(position)
+        submitList(updated)
         notifyItemRemoved(position)
     }
 
     class ViewHolder(
-        private val binding: RecipeCardLayoutBinding,
+        private val binding: FragmentRecipeViewBinding,
         clickListener: RecipeClickListeners
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -96,12 +100,12 @@ class RecipeAdapter(
             with(binding) {
                 previewTitleRecipe.text = recipe.title
                 previewCategory.text = recipe.category
-                viewTitleRecipe.text = recipe.title
-                viewCategory.text = recipe.category
                 author.text = recipe.author
                 favoriteButton.isChecked = recipe.isFavorite
-                if (recipe.picture.isNotBlank()) background.setImageURI(recipe.picture.toUri())
-                else background.setImageResource(R.drawable.ic_banner_foreground)
+                if (recipe.picture.isNotBlank())
+                    background.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
+                else
+                    background.setImageResource(R.drawable.ic_launcher_foreground)
             }
         }
     }

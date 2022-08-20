@@ -40,13 +40,9 @@
         android:id="@+id/recipe_view_fragment"
         android:name="ru.netology.nerecipe.ui.RecipeViewFragment"
         android:label="@string/title_recipe"
-        tools:layout="@layout/fragment_recipe_view">
+        tools:layout="@layout/fragment_recipe_view2">
         <action
             android:id="@+id/action_recipe_view_fragment_to_new_recipe_fragment"
             app:destination="@id/new_recipe_fragment" />
     </fragment>
-    <fragment
-        android:id="@+id/categories_fragment"
-        android:name="ru.netology.nerecipe.ui.CategoriesFragment"
-        android:label="@string/title_categories_fragment" />
 </navigation>

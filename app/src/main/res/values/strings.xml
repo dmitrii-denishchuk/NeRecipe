@@ -19,4 +19,5 @@
     <string name="search">Search</string>
     <string name="title_categories_fragment">Categories</string>
     <string name="add_next_step">Add next step</string>
+    <string name="empty">Empty</string>
 </resources>

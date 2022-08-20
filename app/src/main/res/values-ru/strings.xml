@@ -20,4 +20,5 @@
     <string name="search">Поиск</string>
     <string name="title_categories_fragment">Категории</string>
     <string name="add_next_step">Добавить шаг</string>
+    <string name="empty">Empty</string>
 </resources>

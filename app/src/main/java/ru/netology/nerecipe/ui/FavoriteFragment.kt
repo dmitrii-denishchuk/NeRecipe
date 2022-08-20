@@ -62,7 +62,7 @@ class FavoriteFragment : Fragment() {
                 }
             })
 
-        binding.recipeRecyclerView.adapter = adapter
+        binding.viewRecipeRecycler.adapter = adapter
 
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             adapter.submitList(recipes.filter { it.isFavorite })
