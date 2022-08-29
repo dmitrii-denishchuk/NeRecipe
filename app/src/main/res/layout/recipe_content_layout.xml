@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="@dimen/spacing_12dp"
     android:backgroundTint="@color/primaryColor"
     app:cardCornerRadius="@dimen/spacing_12dp"
@@ -13,35 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/stepName"
+        <EditText
+            android:id="@+id/editableStepContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_12dp"
-            android:layout_marginTop="@dimen/spacing_12dp"
             android:background="@null"
-            android:gravity="fill_horizontal|center"
+            android:enabled="true"
             android:hint="Шаг"
-            android:minHeight="24dp"
+            android:inputType="textCapSentences"
+            android:minHeight="@dimen/user_avatar_48dp"
+            android:paddingStart="@dimen/spacing_12dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/menuButton"
+            app:layout_constraintEnd_toStartOf="@id/removeOrAddContent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/stepName">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editableStepContent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                android:paddingVertical="@dimen/spacing_12dp">
+                android:paddingBottom="@dimen/spacing_12dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/backgroundCard"
+                    android:id="@+id/editablePictureContentCard"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="@dimen/spacing_12dp"
@@ -54,49 +56,60 @@
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/contentCard"
+                            android:id="@+id/editableTextContentCard"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="@dimen/spacing_12dp"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <TextView
-                                android:id="@+id/viewContent"
+                            <EditText
+                                android:id="@+id/editableTextContent"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/white"
+                                android:background="@null"
                                 android:gravity="fill_horizontal|center"
                                 android:hint="Содержимое"
+                                android:inputType="textCapSentences|textMultiLine"
                                 android:justificationMode="inter_word"
                                 android:minHeight="48dp"
                                 android:padding="4dp" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <ImageView
-                            android:id="@+id/recipeViewBackground"
+                            android:id="@+id/editablePictureContent"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginTop="-48dp"
-                            android:background="#E8E8E8"
+                            android:background="@color/secondaryColor"
                             android:contentDescription="@string/preview"
-                            android:paddingTop="148dp"
-                            android:paddingBottom="100dp"
+                            android:minHeight="180dp"
                             android:scaleType="centerCrop"
-                            app:layout_constraintTop_toBottomOf="@id/contentCard"
-                            app:srcCompat="@drawable/ic_launcher_foreground"
-                            app:tint="@color/primaryColor" />
+                            app:layout_constraintTop_toBottomOf="@id/editableTextContentCard" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/addContentPicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/editableTextContentCard"
+                            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuButton"
-            style="@style/Widget.AppTheme.menu_button"
+            android:id="@+id/removeOrAddContent"
+            style="@style/Widget.AppTheme.removeOrAddContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:contentDescription="@string/menu_button"
+            android:visibility="visible"
+            app:icon="@drawable/ic_baseline_close_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

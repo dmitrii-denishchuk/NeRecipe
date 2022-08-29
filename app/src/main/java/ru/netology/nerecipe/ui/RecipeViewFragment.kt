@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import ru.netology.nerecipe.R
 import ru.netology.nerecipe.adapter.ContentAdapter
 import ru.netology.nerecipe.adapter.RecipeAdapter
@@ -41,20 +43,18 @@ class RecipeViewFragment : Fragment() {
         val viewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         val contentAdapter = ContentAdapter(object : ContentClickListeners {
-            override fun clickedRemove(content: Content) {
-                TODO("Not yet implemented")
+            override fun clickedRemoveOrAdd() {
             }
 
-            override fun clickedEdit(content: Content) {
-                TODO("Not yet implemented")
+            override fun clickedAddPicture() {
             }
-
         },
             object : OnStartDragListener {
                 override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
                     itemTouchHelper!!.startDrag((viewHolder!!))
                 }
-            })
+            }
+        )
 
         val recipeViewHolder =
             RecipeAdapter.ViewHolder(binding, object : RecipeClickListeners {

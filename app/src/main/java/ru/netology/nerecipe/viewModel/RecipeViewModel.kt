@@ -28,12 +28,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
     fun clickedSave(recipe: Recipe) {
         if (recipe.title.isBlank()) return
         val someRecipe = currentRecipe.value?.copy(
-            content = recipe.content.filterNot { it.id < 0 },
+            content = currentContentList,
             title = recipe.title,
             category = recipe.category,
             picture = recipe.picture
         ) ?: Recipe(
-            content = recipe.content.filterNot { it.id < 0 },
+            content = currentContentList,
             title = recipe.title,
             category = recipe.category,
             picture = recipe.picture
@@ -43,28 +43,23 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
         currentContentList.clear()
     }
 
-    fun clickedSaveContent(recipe: Recipe, content: Content) {
-        currentContentList.add(
-            Content(
-                id = currentContentList.size,
-                step = content.step,
-                content = content.content,
-                picture = content.picture
-            )
-        )
-//        currentRecipe.value?.id?.let { convert(it) } ?.let {
-//            Content(
-//                id = it,
-//                step = content.step,
-//                content = content.content,
-//                picture = content.picture
-//            )} ?.let { currentContentList.add(it) }
-        currentContentList.add(Content(0, "", "", ""))
+    fun clickedSaveContent(content: Content) {
+        if (currentContentList.isEmpty()) {
+            currentContentList.add(content)
+            currentContentList.add(Content(currentContentList.size, "", "", ""))
+        } else {
+            currentContentList.removeAt(currentContentList.size - 1)
+            currentContentList.add(content.copy(id = currentContentList.size))
+            currentContentList.add(Content(currentContentList.size, "", "", ""))
+        }
+    }
+
+    fun clickedSaveCurrentRecipe(recipe: Recipe) {
         currentRecipe.value = currentRecipe.value?.copy(
             title = recipe.title,
             category = recipe.category,
             picture = recipe.picture,
-            content = currentContentList
+            content = currentContentList//.filter { it.id == currentContentList.size - 1 && it.step != "" }
         )
     }
 
@@ -73,7 +68,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
     }
 
     fun minusRecipe(recipes: List<Recipe>) {
-        filteredRecipes.value = filteredRecipes.value?.minus(recipes)
+        filteredRecipes.value = filteredRecipes.value?.minus(recipes.toSet())
     }
 
     override fun clickedFavorite(recipe: Recipe) = repository.favoriteById(recipe.id)
@@ -86,14 +81,5 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
 
     override fun clickedRecipe(recipe: Recipe) {
         currentRecipe.value = recipe
-    }
-}
-
-fun convert(id: Long): Double {
-    val newId = id.toString()
-    return with(newId) {
-        plus(".0")
-        toDouble()
-        +0.1
     }
 }

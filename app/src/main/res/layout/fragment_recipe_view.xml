@@ -17,15 +17,12 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/recipeViewBackground"
+            android:id="@+id/editablePictureRecipe"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:contentDescription="@string/preview"
-            android:padding="100dp"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_foreground"
-            app:tint="@color/primaryColor" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/userAvatar"
@@ -34,7 +31,7 @@
             android:layout_margin="@dimen/spacing_12dp"
             android:contentDescription="@string/user_avatar_description"
             app:layout_constraintBottom_toBottomOf="@id/author"
-            app:layout_constraintStart_toStartOf="@id/recipeViewBackground"
+            app:layout_constraintStart_toStartOf="@id/editablePictureRecipe"
             app:layout_constraintTop_toTopOf="@id/author"
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
@@ -53,13 +50,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menuButton"
-            style="@style/Widget.AppTheme.menu_button"
+            style="@style/Widget.AppTheme.menuButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:contentDescription="@string/menu_button"
-            app:layout_constraintEnd_toEndOf="@id/recipeViewBackground"
-            app:layout_constraintTop_toTopOf="@id/recipeViewBackground" />
+            app:layout_constraintEnd_toEndOf="@id/editablePictureRecipe"
+            app:layout_constraintTop_toTopOf="@id/editablePictureRecipe" />
 
         <TextView
             android:id="@+id/recipeViewCategory"
@@ -79,23 +76,24 @@
             android:ellipsize="end"
             android:gravity="start"
             android:hint="Название"
+            android:singleLine="true"
             android:textSize="@dimen/title_text_size_24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/favoriteButton"
             app:layout_constraintEnd_toStartOf="@id/favoriteButton"
-            app:layout_constraintStart_toStartOf="@id/recipeViewBackground"
+            app:layout_constraintStart_toStartOf="@id/editablePictureRecipe"
             app:layout_constraintTop_toTopOf="@id/favoriteButton"
             app:layout_constraintVertical_chainStyle="spread" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/favoriteButton"
-            style="@style/Widget.AppTheme.favorite_button"
+            style="@style/Widget.AppTheme.favoriteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:contentDescription="@string/favorite"
-            app:layout_constraintBottom_toBottomOf="@id/recipeViewBackground"
-            app:layout_constraintEnd_toEndOf="@id/recipeViewBackground" />
+            app:layout_constraintBottom_toBottomOf="@id/editablePictureRecipe"
+            app:layout_constraintEnd_toEndOf="@id/editablePictureRecipe" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipeContentLayout"
@@ -104,7 +102,7 @@
             android:orientation="horizontal"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/recipeViewBackground"
+            app:layout_constraintTop_toBottomOf="@id/editablePictureRecipe"
             tools:listitem="@layout/recipe_content_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

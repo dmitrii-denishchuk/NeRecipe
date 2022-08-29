@@ -3,6 +3,7 @@ package ru.netology.nerecipe.adapter
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -86,7 +87,7 @@ class RecipeAdapter(
                 clickListener.clickedFavorite(recipe)
             }
 
-            binding.recipeViewBackground.setOnClickListener {
+            binding.editablePictureRecipe.setOnClickListener {
                 clickListener.clickedRecipe(recipe)
             }
 
@@ -103,9 +104,9 @@ class RecipeAdapter(
                 author.text = recipe.author
                 favoriteButton.isChecked = recipe.isFavorite
                 if (recipe.picture.isNotBlank())
-                    recipeViewBackground.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
+                    editablePictureRecipe.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
                 else
-                    recipeViewBackground.setImageResource(R.drawable.ic_launcher_foreground)
+                    editablePictureRecipe.setImageResource(R.drawable.ic_launcher_foreground)
             }
         }
     }
