@@ -4,22 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import ru.netology.nerecipe.R
 import ru.netology.nerecipe.adapter.ContentAdapter
 import ru.netology.nerecipe.adapter.RecipeAdapter
-import ru.netology.nerecipe.clickListeners.ContentClickListeners
 import ru.netology.nerecipe.clickListeners.RecipeClickListeners
 import ru.netology.nerecipe.databinding.FragmentRecipeViewBinding
+import ru.netology.nerecipe.dragAndDropHelpers.MyItemTouchHelperCallback
 import ru.netology.nerecipe.dragAndDropHelpers.OnStartDragListener
-import ru.netology.nerecipe.recipe.Content
 import ru.netology.nerecipe.recipe.Recipe
 import ru.netology.nerecipe.viewModel.RecipeViewModel
 
@@ -38,23 +35,16 @@ class RecipeViewFragment : Fragment() {
             false
         )
 
+        val recycler = binding.recipeContentLayout
         binding.recipeContentLayout.visibility = View.VISIBLE
 
         val viewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
-        val contentAdapter = ContentAdapter(object : ContentClickListeners {
-            override fun clickedRemoveOrAdd() {
+        val contentAdapter = ContentAdapter(object : OnStartDragListener {
+            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                itemTouchHelper!!.startDrag((viewHolder!!))
             }
-
-            override fun clickedAddPicture() {
-            }
-        },
-            object : OnStartDragListener {
-                override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                    itemTouchHelper!!.startDrag((viewHolder!!))
-                }
-            }
-        )
+        })
 
         val recipeViewHolder =
             RecipeAdapter.ViewHolder(binding, object : RecipeClickListeners {
@@ -77,13 +67,16 @@ class RecipeViewFragment : Fragment() {
 
                 override fun clickedRecipe(recipe: Recipe) {
                 }
-            }
-        )
+            })
 
-        binding.recipeContentLayout.adapter = contentAdapter
+        recycler.adapter = contentAdapter
+
+        val callback: ItemTouchHelper.Callback = MyItemTouchHelperCallback(contentAdapter)
+        itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper!!.attachToRecyclerView(recycler)
 
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
-            val recipe = recipes.firstOrNull { it.id == arguments?.getLong("id") } ?: Recipe()
+            val recipe = recipes.firstOrNull { it.id == arguments?.getLong("id") } ?: return@observe
             recipeViewHolder.bind(recipe)
             contentAdapter.submitList(recipe.content)
         }

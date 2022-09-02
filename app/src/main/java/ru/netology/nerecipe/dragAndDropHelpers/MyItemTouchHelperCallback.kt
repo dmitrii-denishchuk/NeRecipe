@@ -1,9 +1,9 @@
 package ru.netology.nerecipe.dragAndDropHelpers
 
 import android.graphics.Canvas
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 
 class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
     ItemTouchHelper.Callback() {
@@ -20,16 +20,9 @@ class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        return if (recyclerView.layoutManager is GridLayoutManager) {
-            val dragFlags =
-                ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            val swipeFlags = 0
-            makeMovementFlags(dragFlags, swipeFlags)
-        } else {
-            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-            makeMovementFlags(dragFlags, swipeFlags)
-        }
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+        return makeMovementFlags(dragFlags, swipeFlags)
     }
 
     override fun onMove(
@@ -37,8 +30,6 @@ class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        if (viewHolder.itemViewType != target.itemViewType)
-            return false
         adapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
@@ -57,7 +48,7 @@ class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
         isCurrentlyActive: Boolean
     ) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            val alpha = ALPHA_FULL - Math.abs(dX) / viewHolder.itemView.width.toFloat()
+            val alpha = ALPHA_FULL - abs(dX) / viewHolder.itemView.width.toFloat()
             viewHolder.itemView.alpha = alpha
             viewHolder.itemView.translationX = dX
         } else

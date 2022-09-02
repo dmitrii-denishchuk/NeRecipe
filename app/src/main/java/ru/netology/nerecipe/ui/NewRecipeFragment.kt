@@ -64,8 +64,10 @@ class NewRecipeFragment : Fragment() {
 
         val contentImage = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
             val path = it ?: return@registerForActivityResult
-            view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)?.tag = path
-            view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)?.setImageURI(path)
+            view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)?.tag =
+                path
+            view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)
+                ?.setImageURI(path)
         }
 
         val contentAdapter = ContentAdapter(object : ContentClickListeners {
@@ -73,36 +75,66 @@ class NewRecipeFragment : Fragment() {
                 contentImage.launch(arrayOf("image/*"))
             }
 
-            override fun clickedRemoveOrAdd() {
-                stepResource = view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableStepContent)?.text.toString()
-                contentResource = view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableTextContent)?.text.toString()
-                val pictureResource = view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)
+            override fun clickedRemoveOrAdd(content: Content) {
+                stepResource =
+                    view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableStepContent)?.text.toString()
+                contentResource =
+                    view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableTextContent)?.text.toString()
+                val pictureResource =
+                    view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)
 
-                while (stepResource.isBlank() || contentResource.isBlank()) {
-                    Toast.makeText(context, "Заполните этот шаг прежде чем создавать новый", Toast.LENGTH_SHORT).show()
-                    return
+                if (content.step != "") {
+//                    recipeViewModel.clickedSaveCurrentContent(
+//                        content.copy(
+//                            step = stepResource,
+//                            content = contentResource,
+//                            picture =
+//                            if (pictureResource?.tag == null) ""
+//                            else savePicture(pictureResource)
+//                        )
+//                    )
+
+                    recipeViewModel.clickedRemoveContent(content.id)
+
+                    recipeViewModel.clickedSaveCurrentRecipe(
+                        Recipe(
+                            title = bindingTitle.editableTitleRecipe.text.toString(),
+                            category = category,
+                            picture =
+                            if (bindingTitle.editablePictureRecipe.tag == null) ""
+                            else savePicture(bindingTitle.editablePictureRecipe),
+                        )
+                    )
+                } else {
+                    while (stepResource.isBlank() || contentResource.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Заполните этот шаг прежде чем создавать новый",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+
+                    recipeViewModel.clickedSaveCurrentContent(
+                        content.copy(
+                            step = stepResource,
+                            content = contentResource,
+                            picture =
+                            if (pictureResource?.tag == null) ""
+                            else savePicture(pictureResource)
+                        )
+                    )
+
+                    recipeViewModel.clickedSaveCurrentRecipe(
+                        Recipe(
+                            title = bindingTitle.editableTitleRecipe.text.toString(),
+                            category = category,
+                            picture =
+                            if (bindingTitle.editablePictureRecipe.tag == null) ""
+                            else savePicture(bindingTitle.editablePictureRecipe),
+                        )
+                    )
                 }
-
-                recipeViewModel.clickedSaveContent(
-                    Content(
-                        id = 0,
-                        step = stepResource,
-                        content = contentResource,
-                        picture =
-                        if (pictureResource?.tag == null) ""
-                        else savePicture(pictureResource)
-                    )
-                )
-
-                recipeViewModel.clickedSaveCurrentRecipe(
-                    Recipe(
-                        title = bindingTitle.editableTitleRecipe.text.toString(),
-                        category = category,
-                        picture =
-                        if (bindingTitle.editablePictureRecipe.tag == null) ""
-                        else savePicture(bindingTitle.editablePictureRecipe),
-                    )
-                )
             }
         },
             object : OnStartDragListener {
@@ -134,11 +166,12 @@ class NewRecipeFragment : Fragment() {
                     val item = parent.getItemAtPosition(position) as String
                     category = item
                 }
+
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         spinner.onItemSelectedListener = itemSelectedListener
 
-        bindingTitle.addContentPicture.setOnClickListener {
+        bindingTitle.addRecipePicture.setOnClickListener {
             recipeImage.launch(arrayOf("image/*"))
         }
 
@@ -155,27 +188,36 @@ class NewRecipeFragment : Fragment() {
         }
 
         bindingTitle.okButton.setOnClickListener {
-            stepResource = view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableStepContent)?.text.toString()
-            contentResource = view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableTextContent)?.text.toString()
-            val pictureResource = view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)
-
-            val recipe = Recipe(
-                title = bindingTitle.editableTitleRecipe.text.toString(),
-                category = category,
-                picture =
-                if (bindingTitle.editablePictureRecipe.tag == null) ""
-                else savePicture(bindingTitle.editablePictureRecipe)
-            )
+            stepResource =
+                view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableStepContent)?.text.toString()
+            contentResource =
+                view?.findViewById<EditText>(ru.netology.nerecipe.R.id.editableTextContent)?.text.toString()
+            val pictureResource =
+                view?.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureContent)
 
             while (bindingTitle.editableTitleRecipe.text.isNullOrBlank()) {
                 Toast.makeText(context, "Заполни заголовок", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (stepResource.isEmpty() || contentResource.isEmpty())
-                recipeViewModel.clickedSave(recipe)
-            else {
-                recipeViewModel.clickedSaveContent(
+            while (stepResource == "" || contentResource == "") {
+                Toast.makeText(context, "Создай хотя бы один шаг", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (stepResource == "" || contentResource == "") {
+                recipeViewModel.clickedRemoveContent(-1)
+                recipeViewModel.clickedSaveCurrentRecipe(
+                    Recipe(
+                        title = bindingTitle.editableTitleRecipe.text.toString(),
+                        category = category,
+                        picture =
+                        if (bindingTitle.editablePictureRecipe.tag == null) ""
+                        else savePicture(bindingTitle.editablePictureRecipe),
+                    )
+                )
+            } else {
+                recipeViewModel.clickedSaveCurrentContent(
                     Content(
                         id = 0,
                         step = stepResource,
@@ -185,9 +227,20 @@ class NewRecipeFragment : Fragment() {
                         else savePicture(pictureResource)
                     )
                 )
-                recipeViewModel.clickedSave(recipe)
-            }
 
+                recipeViewModel.clickedRemoveContent(-1)
+
+                recipeViewModel.clickedSaveCurrentRecipe(
+                    Recipe(
+                        title = bindingTitle.editableTitleRecipe.text.toString(),
+                        category = category,
+                        picture =
+                        if (bindingTitle.editablePictureRecipe.tag == null) ""
+                        else savePicture(bindingTitle.editablePictureRecipe),
+                    )
+                )
+            }
+            recipeViewModel.currentRecipe.value?.let { recipe -> recipeViewModel.clickedSave(recipe) }
             bindingTitle.editableTitleRecipe.hideKeyboard()
             findNavController().navigateUp()
         }
@@ -201,14 +254,18 @@ class NewRecipeFragment : Fragment() {
         recycler.adapter = contentAdapter
 
         recipeViewModel.currentRecipe.observe(viewLifecycleOwner) {
-            recycler.layoutManager?.smoothScrollToPosition(recycler,null, recipeViewModel.currentContentList.size)
+            recycler.layoutManager?.smoothScrollToPosition(
+                recycler,
+                null,
+                recipeViewModel.currentContentList.size
+            )
             contentAdapter.submitList(it?.content)
             with(bindingTitle) {
                 with(editableTitleRecipe) {
                     setText(recipeViewModel.currentRecipe.value?.title)
-                        requestFocus()
-                        showKeyboard()
-                        Selection.setSelection(editableText, editableText.length)
+                    requestFocus()
+                    showKeyboard()
+                    Selection.setSelection(editableText, editableText.length)
                 }
             }
         }

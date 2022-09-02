@@ -44,14 +44,14 @@ class FavoriteFragment : Fragment() {
             override fun clickedEdit(recipe: Recipe) {
                 viewModel.clickedEdit(recipe)
                 findNavController().navigate(
-                    R.id.action_navigation_favorite_to_new_recipe_fragment,
+                    R.id.action_navigation_book_to_new_recipe_fragment,
                     bundleOf("content" to recipe.content)
                 )
             }
 
             override fun clickedRecipe(recipe: Recipe) {
                 findNavController().navigate(
-                    R.id.action_navigation_favorite_to_recipe_view_fragment,
+                    R.id.action_navigation_book_to_recipe_view_fragment,
                     bundleOf("id" to  recipe.id)
                 )
             }

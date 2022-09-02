@@ -1,7 +1,6 @@
 package ru.netology.nerecipe.recipe
 
 import kotlinx.serialization.Serializable
-import ru.netology.nerecipe.data.repository.ContentRepository
 import ru.netology.nerecipe.data.repository.RecipeRepository
 
 @Serializable

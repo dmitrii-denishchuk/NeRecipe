@@ -18,7 +18,7 @@ import java.util.*
 
 class RecipeAdapter(
     private val clickListener: RecipeClickListeners,
-    var listener: OnStartDragListener
+    private var listener: OnStartDragListener
 ) : ListAdapter<Recipe, RecipeAdapter.ViewHolder>(DiffCallback), ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,16 +44,16 @@ class RecipeAdapter(
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         val updated = currentList.toMutableList()
         Collections.swap(updated, fromPosition, toPosition)
-        submitList(updated)
         notifyItemMoved(fromPosition, toPosition)
+        submitList(updated)
         return true
     }
 
     override fun onItemDismiss(position: Int) {
         val updated = currentList.toMutableList()
         updated.removeAt(position)
-        submitList(updated)
         notifyItemRemoved(position)
+        submitList(updated)
     }
 
     class ViewHolder(
