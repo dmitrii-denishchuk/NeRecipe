@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
@@ -7,42 +8,54 @@
 
     <fragment
         android:id="@+id/navigation_book"
-        android:name="ru.netology.nerecipe.ui.FeedFragment"
+        android:name="ru.netology.nerecipe.ui.FeedOrFavoriteRecipeFragment"
         android:label="@string/title_book"
-        tools:layout="@layout/fragment_feed_recipe">
+        tools:layout="@layout/fragment_feed_or_favorite_recipe">
         <action
             android:id="@+id/action_navigation_book_to_new_recipe_fragment"
             app:destination="@id/new_recipe_fragment" />
         <action
             android:id="@+id/action_navigation_book_to_recipe_view_fragment"
-            app:destination="@id/recipe_view_fragment" />
+            app:destination="@id/view_recipe_fragment" />
+        <action
+            android:id="@+id/action_navigation_book_to_edit_recipe_fragment"
+            app:destination="@id/edit_recipe_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="ru.netology.nerecipe.ui.FeedFragment"
+        android:name="ru.netology.nerecipe.ui.FeedOrFavoriteRecipeFragment"
         android:label="@string/title_favorite"
-        tools:layout="@layout/fragment_feed_recipe">
+        tools:layout="@layout/fragment_feed_or_favorite_recipe">
         <action
-            android:id="@+id/action_navigation_favorite_to_new_recipe_fragment"
+            android:id="@+id/action_navigation_book_to_new_recipe_fragment"
             app:destination="@id/new_recipe_fragment" />
         <action
-            android:id="@+id/action_navigation_favorite_to_recipe_view_fragment"
-            app:destination="@id/recipe_view_fragment" />
+            android:id="@+id/action_navigation_book_to_recipe_view_fragment"
+            app:destination="@id/view_recipe_fragment" />
+        <action
+            android:id="@+id/action_navigation_book_to_edit_recipe_fragment"
+            app:destination="@id/edit_recipe_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/new_recipe_fragment"
-        android:name="ru.netology.nerecipe.ui.NewRecipeFragment"
-        android:label="@string/title_new_or_edit"
-        tools:layout="@layout/fragment_new_recipe" />
+        android:name="ru.netology.nerecipe.ui.NewOrEditRecipeFragment"
+        android:label="@string/title_new"
+        tools:layout="@layout/fragment_new_or_edit_recipe" />
     <fragment
-        android:id="@+id/recipe_view_fragment"
-        android:name="ru.netology.nerecipe.ui.RecipeViewFragment"
+        android:id="@+id/view_recipe_fragment"
+        android:name="ru.netology.nerecipe.ui.ViewRecipeFragment"
         android:label="@string/title_recipe"
-        tools:layout="@layout/fragment_recipe_view">
+        tools:layout="@layout/fragment_view_recipe">
         <action
-            android:id="@+id/action_recipe_view_fragment_to_new_recipe_fragment"
-            app:destination="@id/new_recipe_fragment" />
+            android:id="@+id/action_recipe_view_fragment_to_edit_recipe_fragment"
+            app:destination="@id/edit_recipe_fragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/edit_recipe_fragment"
+        android:name="ru.netology.nerecipe.ui.NewOrEditRecipeFragment"
+        android:label="@string/title_edit"
+        tools:layout="@layout/fragment_new_or_edit_recipe" />
 </navigation>

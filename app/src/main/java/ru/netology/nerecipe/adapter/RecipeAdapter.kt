@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nerecipe.R
 import ru.netology.nerecipe.clickListeners.RecipeClickListeners
-import ru.netology.nerecipe.databinding.FragmentRecipeViewBinding
+import ru.netology.nerecipe.databinding.FragmentViewRecipeBinding
 import ru.netology.nerecipe.dragAndDropHelpers.ItemTouchHelperAdapter
 import ru.netology.nerecipe.dragAndDropHelpers.OnStartDragListener
 import ru.netology.nerecipe.recipe.Recipe
@@ -22,7 +22,7 @@ class RecipeAdapter(
 ) : ListAdapter<Recipe, RecipeAdapter.ViewHolder>(DiffCallback), ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FragmentRecipeViewBinding.inflate(
+        val binding = FragmentViewRecipeBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding, clickListener)
@@ -44,7 +44,6 @@ class RecipeAdapter(
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         val updated = currentList.toMutableList()
         Collections.swap(updated, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
         submitList(updated)
         return true
     }
@@ -57,7 +56,7 @@ class RecipeAdapter(
     }
 
     class ViewHolder(
-        private val binding: FragmentRecipeViewBinding,
+        private val binding: FragmentViewRecipeBinding,
         clickListener: RecipeClickListeners
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -73,7 +72,7 @@ class RecipeAdapter(
                             true
                         }
                         R.id.editButton -> {
-                            clickListener.clickedEdit(recipe)
+                            clickListener.clickedNewOrEdit(recipe)
                             true
                         }
                         else -> false
@@ -103,10 +102,12 @@ class RecipeAdapter(
                 recipeViewCategory.text = recipe.category
                 author.text = recipe.author
                 favoriteButton.isChecked = recipe.isFavorite
-                if (recipe.picture.isNotBlank())
-                    editablePictureRecipe.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
-                else
+                if (recipe.picture == "") {
                     editablePictureRecipe.setImageResource(R.drawable.ic_launcher_foreground)
+                    editablePictureRecipe.scaleType = ImageView.ScaleType.CENTER
+                }
+                else
+                    editablePictureRecipe.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
             }
         }
     }

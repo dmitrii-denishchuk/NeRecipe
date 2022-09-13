@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import ru.netology.nerecipe.db.RecipeEntity
-import ru.netology.nerecipe.recipe.Content
+import ru.netology.nerecipe.recipe.Step
 
 @Dao
 interface RecipeDao {
@@ -19,19 +19,19 @@ interface RecipeDao {
     @Query(
         """
         UPDATE recipes SET
-        content = :content,
+        content = :step,
         title = :title,
         category = :category,
         picture = :picture
         WHERE id = :id;
         """
     )
-    fun update(id: Long, content: List<Content>, title: String, category: String, picture: String)
+    fun update(id: Long, step: List<Step>, title: String, category: String, picture: String)
 
     fun save(recipe: RecipeEntity) =
         if (recipe.id == 0L) insert(recipe) else update(
             recipe.id,
-            recipe.content,
+            recipe.step,
             recipe.title,
             recipe.category,
             recipe.picture

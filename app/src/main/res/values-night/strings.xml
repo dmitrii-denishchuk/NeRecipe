@@ -16,4 +16,12 @@
     <string name="title_categories_fragment">Categories</string>
     <string name="add_next_step">Add next step</string>
     <string name="empty">Empty</string>
+    <string name="author">Author</string>
+    <string name="category">Category</string>
+    <string name="recipe_title">Recipe title</string>
+    <string name="step">Step</string>
+    <string name="content">Content</string>
+    <string name="add_step_picture">Add step picture</string>
+    <string name="think_of_a_name">Think of a name</string>
+    <string name="add_recipe_picture">Add recipe picture</string>
 </resources>

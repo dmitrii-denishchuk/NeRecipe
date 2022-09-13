@@ -5,7 +5,7 @@ import ru.netology.nerecipe.recipe.Recipe
 internal fun RecipeEntity.toRecipe() = Recipe(
     id = id,
     isFavorite = isFavorite,
-    content = content,
+    steps = step,
     title = title,
     author = author,
     category = category,
@@ -15,7 +15,7 @@ internal fun RecipeEntity.toRecipe() = Recipe(
 internal fun Recipe.toEntity() = RecipeEntity(
     id = id,
     isFavorite = isFavorite,
-    content = content,
+    step = steps,
     title = title,
     author = author,
     category = category,

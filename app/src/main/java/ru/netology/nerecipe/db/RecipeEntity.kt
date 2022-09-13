@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import ru.netology.nerecipe.recipe.Content
+import ru.netology.nerecipe.recipe.Step
 import ru.netology.nerecipe.utils.ContentConverters
 
 @Entity(tableName = "recipes")
@@ -20,7 +20,7 @@ class RecipeEntity(
 
     @TypeConverters(ContentConverters::class)
     @ColumnInfo(name = "content")
-    val content: List<Content>,
+    val step: List<Step>,
 
     @ColumnInfo(name = "title")
     val title: String,

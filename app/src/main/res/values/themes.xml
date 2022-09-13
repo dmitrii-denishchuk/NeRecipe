@@ -14,6 +14,20 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Widget.AppTheme.author" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="icon">@drawable/ic_baseline_person_24</item>
+        <item name="iconTint">@color/favorite_button_tint</item>
+        <item name="android:textColor">@color/buttons_text_tint</item>
+        <item name="iconPadding">0dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:minWidth">@dimen/user_avatar_48dp</item>
+        <item name="android:minHeight">@dimen/user_avatar_48dp</item>
+    </style>
+
     <style name="Widget.AppTheme.favoriteButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="icon">@drawable/ic_favorite_24</item>
         <item name="iconTint">@color/favorite_button_tint</item>

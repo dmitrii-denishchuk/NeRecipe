@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="@dimen/spacing_12dp"
-    app:cardElevation="@dimen/elevation_4dp">
+    android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/editableHeadRecipeCard"
@@ -19,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/editableTitleRecipeCard"
@@ -35,10 +33,11 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="fill_horizontal|center"
-                    android:hint="Придумай название"
+                    android:hint="@string/think_of_a_name"
                     android:inputType="textCapSentences"
                     android:minHeight="48dp"
-                    android:padding="4dp" />
+                    android:padding="4dp"
+                    android:autofillHints="@string/think_of_a_name" />
             </com.google.android.material.card.MaterialCardView>
 
             <ImageView
@@ -59,7 +58,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+                app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+                android:contentDescription="@string/add_recipe_picture" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -83,14 +83,15 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/editableContentRecipe"
+        android:id="@+id/editableStepsRecipe"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerCard"
-        tools:listitem="@layout/recipe_content_layout" />
+        tools:listitem="@layout/recipe_step_layout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/okButton"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FeedFragment">
+    tools:context=".ui.FeedOrFavoriteRecipeFragment">
 
     <ImageView
         android:id="@+id/emptyBackground"
@@ -27,7 +27,7 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/spacing_12dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/fragment_recipe_view" />
+        tools:listitem="@layout/fragment_view_recipe" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addRecipeButton"

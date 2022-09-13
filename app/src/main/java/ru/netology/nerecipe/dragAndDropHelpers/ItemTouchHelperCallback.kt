@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.abs
 
-class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
+class VerticalItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
     ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
@@ -20,9 +20,15 @@ class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-        return makeMovementFlags(dragFlags, swipeFlags)
+        return if (recyclerView.id == ru.netology.nerecipe.R.id.viewRecipeRecycler) {
+            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+            makeMovementFlags(dragFlags, swipeFlags)
+        } else {
+            val swipeFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+            val dragFlags = ItemTouchHelper.START or ItemTouchHelper.END
+            makeMovementFlags(dragFlags, swipeFlags)
+        }
     }
 
     override fun onMove(
@@ -30,12 +36,12 @@ class MyItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) :
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        adapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        adapter.onItemMove(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)
         return true
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.onItemDismiss(viewHolder.adapterPosition)
+        adapter.onItemDismiss(viewHolder.absoluteAdapterPosition)
     }
 
     override fun onChildDraw(

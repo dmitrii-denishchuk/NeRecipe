@@ -14,11 +14,20 @@
     <string name="enter_recipe">Опишите рецепт</string>
     <string name="title_favorite">Избранное</string>
     <string name="title_book">Книга</string>
-    <string name="title_new_or_edit">Новый / Редактировать</string>
     <string name="title_recipe">Рецепт</string>
     <string name="filter">Фильтр</string>
     <string name="search">Поиск</string>
     <string name="title_categories_fragment">Категории</string>
     <string name="add_next_step">Добавить шаг</string>
-    <string name="empty">Empty</string>
+    <string name="empty">Пусто</string>
+    <string name="title_edit">Редактировать</string>
+    <string name="title_new">Новый рецепт</string>
+    <string name="author">Автор</string>
+    <string name="category">Категория</string>
+    <string name="recipe_title">Название рецепта</string>
+    <string name="step">Шаг</string>
+    <string name="content">Содержимое</string>
+    <string name="add_step_picture">Добавить картинку шага</string>
+    <string name="think_of_a_name">Придумай название</string>
+    <string name="add_recipe_picture">Добавить картинку рецепта</string>
 </resources>
