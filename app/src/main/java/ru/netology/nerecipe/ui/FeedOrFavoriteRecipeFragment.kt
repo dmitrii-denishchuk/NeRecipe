@@ -3,9 +3,9 @@ package ru.netology.nerecipe.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,10 +24,11 @@ import ru.netology.nerecipe.databinding.FragmentFeedOrFavoriteRecipeBinding
 import ru.netology.nerecipe.dragAndDropHelpers.OnStartDragListener
 import ru.netology.nerecipe.dragAndDropHelpers.VerticalItemTouchHelperCallback
 import ru.netology.nerecipe.recipe.Recipe
-import ru.netology.nerecipe.viewModel.RecipeViewModel
+import ru.netology.nerecipe.viewModel.ViewModel
 
 class FeedOrFavoriteRecipeFragment : Fragment() {
 
+    lateinit var data: LiveData<List<Recipe>>
     lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
 
@@ -43,19 +44,18 @@ class FeedOrFavoriteRecipeFragment : Fragment() {
             false
         )
 
+        val recycler = binding.viewRecipeRecycler
+        val viewModel: ViewModel by viewModels(ownerProducer = ::requireParentFragment)
+
         materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
 
-        val recycler = binding.viewRecipeRecycler
-        val viewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
-        val navController = container?.findNavController()
-        lateinit var data: LiveData<List<Recipe>>
-
-        navController?.addOnDestinationChangedListener { _,
-                                                         destination,
-                                                         _ ->
+        container?.findNavController()?.addOnDestinationChangedListener { _,
+                                                                          destination,
+                                                                          _ ->
             data =
                 if (destination.id == R.id.navigation_book) viewModel.data
                 else viewModel.data.map { recipe -> recipe.filter { it.isFavorite } }
+            viewModel.checkboxesState = booleanArrayOf()
         }
 
         // ADAPTER
@@ -102,21 +102,8 @@ class FeedOrFavoriteRecipeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_book_to_new_recipe_fragment)
         }
 
-        // OBSERVER
-        data.observe(viewLifecycleOwner) { recipes ->
-            adapter.submitList(recipes)
-            recycler.layoutManager?.smoothScrollToPosition(
-                recycler,
-                null,
-                viewModel.currentStepsList.size
-            )
-            if (recipes.isNotEmpty()) binding.emptyBackground.visibility = View.INVISIBLE
-            else binding.emptyBackground.visibility = View.VISIBLE
-        }
-
         // APP MENU
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
+        requireActivity().addMenuProvider(
             object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                     menuInflater.inflate(R.menu.tools, menu)
@@ -156,9 +143,8 @@ class FeedOrFavoriteRecipeFragment : Fragment() {
                                 booleanArrayOf(true, true, true, true, true, true, true)
                             val checkedCheckboxes =
                                 if (viewModel.checkboxesState.isNotEmpty()) viewModel.checkboxesState
-                                else defaultCheckboxes.also {
-                                    viewModel.filteredRecipes.value = data.value
-                                }
+                                else defaultCheckboxes
+                                    .also { viewModel.filteredRecipes.value = data.value }
 
                             viewModel.filteredRecipes.observe(viewLifecycleOwner) {
                                 adapter.submitList(it)
@@ -169,20 +155,21 @@ class FeedOrFavoriteRecipeFragment : Fragment() {
                                 .setMultiChoiceItems(
                                     foodCategory,
                                     checkedCheckboxes
-                                ) { _, which, isChecked ->
+                                ) { dialog, which, isChecked ->
                                     val falseCheck = checkedCheckboxes.count { !it }
                                     val category =
                                         data.value?.filter { it.category == foodCategory[which] }
-                                        if (isChecked) category?.let { viewModel.plusRecipe(it) }
+                                    if (isChecked) category?.let { viewModel.plusRecipe(it) }
                                     else {
                                         if (falseCheck == checkedCheckboxes.size) {
                                             checkedCheckboxes[which] = true
+                                            (dialog as AlertDialog).listView
+                                                .setItemChecked(which, true)
                                             Toast.makeText(
                                                 context,
                                                 "Должен быть выбран хотя бы один параметр",
                                                 Toast.LENGTH_SHORT
                                             ).show()
-                                            return@setMultiChoiceItems
                                         } else
                                             category?.let { viewModel.minusRecipe(it) }
                                     }
@@ -204,6 +191,18 @@ class FeedOrFavoriteRecipeFragment : Fragment() {
                 }
             }, viewLifecycleOwner, Lifecycle.State.RESUMED
         )
+
+        // OBSERVER
+        data.observe(viewLifecycleOwner) { recipes ->
+            adapter.submitList(recipes)
+            recycler.layoutManager?.smoothScrollToPosition(
+                recycler,
+                null,
+                viewModel.currentStepsList.size
+            )
+            if (recipes.isNotEmpty()) binding.emptyBackground.visibility = View.INVISIBLE
+            else binding.emptyBackground.visibility = View.VISIBLE
+        }
 
         return binding.root
     }

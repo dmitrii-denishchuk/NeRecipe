@@ -15,7 +15,7 @@ import ru.netology.nerecipe.clickListeners.RecipeClickListeners
 import ru.netology.nerecipe.databinding.FragmentViewRecipeBinding
 import ru.netology.nerecipe.dragAndDropHelpers.OnStartDragListener
 import ru.netology.nerecipe.recipe.Recipe
-import ru.netology.nerecipe.viewModel.RecipeViewModel
+import ru.netology.nerecipe.viewModel.ViewModel
 
 class ViewRecipeFragment : Fragment() {
 
@@ -31,7 +31,7 @@ class ViewRecipeFragment : Fragment() {
         )
 
         val recycler = binding.recipeContentLayout
-        val viewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
+        val viewModel: ViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         binding.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         recycler.visibility = View.VISIBLE

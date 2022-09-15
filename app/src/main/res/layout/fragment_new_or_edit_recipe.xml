@@ -43,8 +43,8 @@
             <ImageView
                 android:id="@+id/editablePictureRecipe"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/secondaryColor"
+                android:layout_height="@dimen/card_size_180dp"
+                android:background="?attr/colorPrimaryVariant"
                 android:contentDescription="@string/preview"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +95,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/okButton"
-        style="@style/Widget.AppTheme.applyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_12dp"
@@ -106,6 +105,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cancelButton"
+        style="@style/Widget.AppTheme.cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_12dp"

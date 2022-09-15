@@ -9,7 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/headRecipeCard"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="@dimen/card_size_180dp"
         android:layout_margin="@dimen/spacing_12dp"
         app:cardCornerRadius="@dimen/spacing_12dp"
         app:cardElevation="@dimen/elevation_4dp"
@@ -23,7 +23,7 @@
                 android:id="@+id/editablePictureRecipe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/secondaryColor"
+                android:background="?attr/colorPrimaryVariant"
                 android:contentDescription="@string/preview"
                 android:scaleType="centerCrop" />
 

@@ -29,5 +29,5 @@
     <string name="content">Содержимое</string>
     <string name="add_step_picture">Добавить картинку шага</string>
     <string name="think_of_a_name">Придумай название</string>
-    <string name="add_recipe_picture">Добавить картинку рецепта</string>
+    <string name="add_recipe_picture">Добавь картинку рецепта</string>
 </resources>

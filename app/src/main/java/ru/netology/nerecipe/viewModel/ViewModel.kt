@@ -12,7 +12,7 @@ import ru.netology.nerecipe.recipe.Step
 
 const val EMPTY_STEP_ID = 1000
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application),
+class ViewModel(application: Application) : AndroidViewModel(application),
     RecipeClickListeners {
 
     private val repository: RecipeRepository = RecipeRepositoryImpl(
@@ -24,7 +24,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application),
     val data get() = repository.data
     val currentRecipe = MutableLiveData<Recipe?>(null)
     val currentStepsList = mutableListOf<Step>()
-    var filteredRecipes = MutableLiveData<List<Recipe>>()
+    var filteredRecipes = MutableLiveData<List<Recipe>>(null)
     var checkboxesState = booleanArrayOf()
 
     fun clickedAddToDb() {

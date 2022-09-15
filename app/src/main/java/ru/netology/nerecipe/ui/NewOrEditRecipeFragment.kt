@@ -31,13 +31,13 @@ import ru.netology.nerecipe.dragAndDropHelpers.VerticalItemTouchHelperCallback
 import ru.netology.nerecipe.recipe.Recipe
 import ru.netology.nerecipe.recipe.Step
 import ru.netology.nerecipe.utils.hideKeyboard
-import ru.netology.nerecipe.viewModel.RecipeViewModel
+import ru.netology.nerecipe.viewModel.ViewModel
 import java.util.*
 
 class NewOrEditRecipeFragment : Fragment() {
 
     var title = ""
-    val recipeViewModel: RecipeViewModel by viewModels(ownerProducer = ::requireParentFragment)
+    val viewModel: ViewModel by viewModels(ownerProducer = ::requireParentFragment)
     lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreateView(
@@ -65,7 +65,7 @@ class NewOrEditRecipeFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    recipeViewModel.clickedSaveCurrentRecipe(
+                    viewModel.clickedSaveCurrentRecipe(
                         Recipe(-2L, category = parent.getItemAtPosition(position) as String)
                     )
                 }
@@ -79,7 +79,7 @@ class NewOrEditRecipeFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.OpenDocument()) {
                 val uri = it ?: return@registerForActivityResult
                 binding.editablePictureRecipe.setImageURI(uri)
-                recipeViewModel.clickedSaveCurrentRecipe(
+                viewModel.clickedSaveCurrentRecipe(
                     Recipe(-3L, picture = savePicture(binding.editablePictureRecipe))
                 )
             }
@@ -91,11 +91,11 @@ class NewOrEditRecipeFragment : Fragment() {
             }
 
             override fun clickedEnterText(step: Step) {
-                recipeViewModel.clickedSaveCurrentStep(step)
+                viewModel.clickedSaveCurrentStep(step)
             }
 
             override fun clickedAddOrRemoveStep(step: Step) {
-                recipeViewModel.clickedAddOrRemoveStep(step)
+                viewModel.clickedAddOrRemoveStep(step)
             }
         },
             object : OnStartDragListener {
@@ -126,7 +126,7 @@ class NewOrEditRecipeFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigateUp()
-            recipeViewModel.currentStepsList.clear()
+            viewModel.currentStepsList.clear()
         }
 
         binding.okButton.setOnClickListener {
@@ -135,15 +135,15 @@ class NewOrEditRecipeFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (recipeViewModel.currentStepsList.size < 2) {
-                while (recipeViewModel.currentStepsList.last().title.isEmpty() ||
-                    recipeViewModel.currentStepsList.last().content.isEmpty()
+            if (viewModel.currentStepsList.size < 2) {
+                while (viewModel.currentStepsList.last().title.isEmpty() ||
+                    viewModel.currentStepsList.last().content.isEmpty()
                 ) {
                     Toast.makeText(context, "Создай хотя бы один шаг", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             } else {
-                while (recipeViewModel.currentStepsList
+                while (viewModel.currentStepsList
                         .filterNot { it.id == 1000 }
                         .any { it.title.isEmpty() || it.content.isEmpty() }
                 ) {
@@ -156,27 +156,27 @@ class NewOrEditRecipeFragment : Fragment() {
                 }
             }
 
-            recipeViewModel.clickedSaveCurrentRecipe(
+            viewModel.clickedSaveCurrentRecipe(
                 Recipe(-1L, title = title)
             )
 
-            recipeViewModel.clickedAddToDb()
+            viewModel.clickedAddToDb()
             binding.editableTitleRecipe.hideKeyboard()
             findNavController().navigateUp()
         }
 
         binding.cancelButton.setOnClickListener {
-            recipeViewModel.currentRecipe.value = null
-            recipeViewModel.currentStepsList.clear()
+            viewModel.currentRecipe.value = null
+            viewModel.currentStepsList.clear()
             binding.editableTitleRecipe.hideKeyboard()
             findNavController().navigateUp()
         }
 
-        recipeViewModel.currentRecipe.observe(viewLifecycleOwner) {
+        viewModel.currentRecipe.observe(viewLifecycleOwner) {
             contentAdapter.submitList(it?.steps)
             with(binding) {
                 with(editableTitleRecipe) {
-                    setText(title.ifEmpty { recipeViewModel.currentRecipe.value?.title })
+                    setText(title.ifEmpty { viewModel.currentRecipe.value?.title })
 //                    requestFocus()
 //                    showKeyboard()
                     Selection.setSelection(editableText, editableText.length)
@@ -213,6 +213,15 @@ class NewOrEditRecipeFragment : Fragment() {
         Glide.with(view)
             .load("https://loremflickr.com/480/480/food?random=${(1..1000).random()}")
             .into(object : CustomTarget<Drawable>() {
+                override fun onLoadCleared(placeholder: Drawable?) {}
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    view.findViewById<ImageView>(ru.netology.nerecipe.R.id.addPictureStep).visibility = View.VISIBLE
+                    view.findViewById<ProgressBar>(ru.netology.nerecipe.R.id.progressBar).visibility = View.GONE
+                    Toast.makeText(context, "Упс...", Toast.LENGTH_SHORT).show()
+                }
+
                 override fun onResourceReady(
                     resource: Drawable,
                     transition: Transition<in Drawable>?
@@ -220,17 +229,11 @@ class NewOrEditRecipeFragment : Fragment() {
                     view.findViewById<ImageView>(ru.netology.nerecipe.R.id.addPictureStep).visibility = View.VISIBLE
                     view.findViewById<ProgressBar>(ru.netology.nerecipe.R.id.progressBar).visibility = View.GONE
                     view.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureStep).setImageDrawable(resource)
-                    recipeViewModel.clickedSaveCurrentStep(
+                    viewModel.clickedSaveCurrentStep(
                         step.copy(
                             picture = savePicture(view.findViewById(ru.netology.nerecipe.R.id.editablePictureStep))
                         )
                     )
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    view.findViewById<ImageView>(ru.netology.nerecipe.R.id.addPictureStep).visibility = View.VISIBLE
-                    view.findViewById<ProgressBar>(ru.netology.nerecipe.R.id.progressBar).visibility = View.GONE
-                    Toast.makeText(context, "Упс...", Toast.LENGTH_SHORT).show()
                 }
             })
     }

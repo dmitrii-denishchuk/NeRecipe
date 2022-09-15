@@ -104,7 +104,7 @@ class RecipeAdapter(
                 favoriteButton.isChecked = recipe.isFavorite
                 if (recipe.picture == "") {
                     editablePictureRecipe.setImageResource(R.drawable.ic_launcher_foreground)
-                    editablePictureRecipe.scaleType = ImageView.ScaleType.CENTER
+                    editablePictureRecipe.scaleType = ImageView.ScaleType.FIT_CENTER
                 }
                 else
                     editablePictureRecipe.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))

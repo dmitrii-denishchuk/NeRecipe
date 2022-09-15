@@ -11,4 +11,5 @@
     <dimen name="title_text_size_24sp">24sp</dimen>
     <dimen name="elevation_4dp">4dp</dimen>
     <dimen name="elevation_8dp">8dp</dimen>
+    <dimen name="card_size_180dp">180dp</dimen>
 </resources>
