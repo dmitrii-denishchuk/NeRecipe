@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="-12dp"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/spacing_12dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/headRecipeCard"
@@ -27,16 +30,17 @@
                 android:contentDescription="@string/preview"
                 android:scaleType="centerCrop" />
 
-            <com.google.android.material.button.MaterialButton
+            <ImageView
                 android:id="@+id/userAvatar"
-                style="@style/Widget.AppTheme.author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="false"
+                android:layout_width="@dimen/user_avatar_48dp"
+                android:layout_height="@dimen/user_avatar_48dp"
                 android:contentDescription="@string/user_avatar_description"
+                android:padding="@dimen/spacing_12dp"
+                android:src="@drawable/ic_baseline_person_24"
                 app:layout_constraintBottom_toBottomOf="@id/author"
                 app:layout_constraintStart_toStartOf="@id/editablePictureRecipe"
-                app:layout_constraintTop_toTopOf="@id/author" />
+                app:layout_constraintTop_toTopOf="@id/author"
+                app:tint="?attr/colorControlNormal" />
 
             <TextView
                 android:id="@+id/author"
@@ -68,6 +72,7 @@
                 android:hint="@string/category"
                 android:singleLine="true"
                 app:layout_constraintBottom_toTopOf="@id/recipeViewTitle"
+                app:layout_constraintEnd_toEndOf="@id/recipeViewTitle"
                 app:layout_constraintStart_toStartOf="@id/recipeViewTitle" />
 
             <TextView
@@ -103,9 +108,7 @@
         android:id="@+id/recipeContentLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
         android:orientation="horizontal"
-        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headRecipeCard"

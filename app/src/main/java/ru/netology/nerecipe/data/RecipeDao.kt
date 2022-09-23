@@ -19,14 +19,14 @@ interface RecipeDao {
     @Query(
         """
         UPDATE recipes SET
-        content = :step,
+        content = :steps,
         title = :title,
         category = :category,
         picture = :picture
         WHERE id = :id;
         """
     )
-    fun update(id: Long, step: List<Step>, title: String, category: String, picture: String)
+    fun update(id: Long, steps: List<Step>, title: String, category: String, picture: String)
 
     fun save(recipe: RecipeEntity) =
         if (recipe.id == 0L) insert(recipe) else update(

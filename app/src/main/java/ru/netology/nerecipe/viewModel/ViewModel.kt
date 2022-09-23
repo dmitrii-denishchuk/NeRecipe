@@ -16,9 +16,7 @@ class ViewModel(application: Application) : AndroidViewModel(application),
     RecipeClickListeners {
 
     private val repository: RecipeRepository = RecipeRepositoryImpl(
-        dao = AppDb.getInstance(
-            context = application
-        ).recipeDao
+        dao = AppDb.getInstance(context = application).recipeDao
     )
 
     val data get() = repository.data
@@ -41,14 +39,13 @@ class ViewModel(application: Application) : AndroidViewModel(application),
     }
 
     fun clickedSaveCurrentStep(step: Step) {
-        val currentStep = currentStepsList.first { it.id == step.id }
         with(currentStepsList) {
-            remove(currentStep)
+            remove(currentStepsList.first { it.id == step.id })
             add(step)
         }
-        currentRecipe.value = currentRecipe.value?.copy(
+        currentRecipe.postValue(currentRecipe.value?.copy(
             steps = currentStepsList.toList().sortedBy { it.id }
-        )
+        ))
     }
 
     fun clickedAddOrRemoveStep(step: Step) {
@@ -66,21 +63,9 @@ class ViewModel(application: Application) : AndroidViewModel(application),
 
     fun clickedSaveCurrentRecipe(recipe: Recipe) {
         when (recipe.id) {
-            -1L -> {
-                currentRecipe.value = currentRecipe.value?.copy(
-                    title = recipe.title
-                )
-            }
-            -2L -> {
-                currentRecipe.value = currentRecipe.value?.copy(
-                    category = recipe.category
-                )
-            }
-            -3L -> {
-                currentRecipe.value = currentRecipe.value?.copy(
-                    picture = recipe.picture
-                )
-            }
+            -1L -> { currentRecipe.value = currentRecipe.value?.copy(title = recipe.title) }
+            -2L -> { currentRecipe.value = currentRecipe.value?.copy(category = recipe.category) }
+            -3L -> { currentRecipe.value = currentRecipe.value?.copy(picture = recipe.picture) }
         }
     }
 

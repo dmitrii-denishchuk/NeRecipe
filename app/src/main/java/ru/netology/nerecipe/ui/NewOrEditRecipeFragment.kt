@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import ru.netology.nerecipe.R
 import ru.netology.nerecipe.adapter.ContentAdapter
 import ru.netology.nerecipe.clickListeners.ContentClickListeners
 import ru.netology.nerecipe.databinding.FragmentNewOrEditRecipeBinding
@@ -37,6 +38,7 @@ import java.util.*
 class NewOrEditRecipeFragment : Fragment() {
 
     var title = ""
+    var category = "Европейская"
     val viewModel: ViewModel by viewModels(ownerProducer = ::requireParentFragment)
     lateinit var itemTouchHelper: ItemTouchHelper
 
@@ -50,7 +52,7 @@ class NewOrEditRecipeFragment : Fragment() {
 
         val spinner = binding.spinner
         ArrayAdapter.createFromResource(
-            requireContext(), ru.netology.nerecipe.R.array.food_category,
+            requireContext(), R.array.food_category,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -65,6 +67,7 @@ class NewOrEditRecipeFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    category = parent.getItemAtPosition(position) as String
                     viewModel.clickedSaveCurrentRecipe(
                         Recipe(-2L, category = parent.getItemAtPosition(position) as String)
                     )
@@ -80,14 +83,14 @@ class NewOrEditRecipeFragment : Fragment() {
                 val uri = it ?: return@registerForActivityResult
                 binding.editablePictureRecipe.setImageURI(uri)
                 viewModel.clickedSaveCurrentRecipe(
-                    Recipe(-3L, picture = savePicture(binding.editablePictureRecipe))
+                    Recipe(-3L, picture = convertImage(binding.editablePictureRecipe.drawable))
                 )
             }
 
         val contentAdapter = ContentAdapter(object : ContentClickListeners {
 
             override fun clickedAddPicture(step: Step) {
-                setPicture(step, recycler)
+                setStepPicture(step, recycler)
             }
 
             override fun clickedEnterText(step: Step) {
@@ -160,6 +163,10 @@ class NewOrEditRecipeFragment : Fragment() {
                 Recipe(-1L, title = title)
             )
 
+            viewModel.clickedSaveCurrentRecipe(
+                Recipe(-2L, category = category)
+            )
+
             viewModel.clickedAddToDb()
             binding.editableTitleRecipe.hideKeyboard()
             findNavController().navigateUp()
@@ -177,11 +184,8 @@ class NewOrEditRecipeFragment : Fragment() {
             with(binding) {
                 with(editableTitleRecipe) {
                     setText(title.ifEmpty { viewModel.currentRecipe.value?.title })
-//                    requestFocus()
-//                    showKeyboard()
                     Selection.setSelection(editableText, editableText.length)
                 }
-//                if (recipeViewModel.currentRecipe.value?.category?.isEmpty() == true) category
                 spinner.setSelection(getIndex(spinner, it?.category ?: ""))
                 editablePictureRecipe.setImageBitmap(BitmapFactory.decodeFile(it?.picture))
             }
@@ -199,17 +203,17 @@ class NewOrEditRecipeFragment : Fragment() {
         return 0
     }
 
-    private fun savePicture(imageView: ImageView): String {
+    private fun convertImage(drawable: Drawable): String {
         val filename = UUID.randomUUID().toString() + ".jpg"
         requireContext().openFileOutput(filename, Context.MODE_PRIVATE).use {
-            imageView.drawable.toBitmap().compress(Bitmap.CompressFormat.JPEG, 85, it)
+            drawable.toBitmap().compress(Bitmap.CompressFormat.JPEG, 85, it)
         }
         return requireContext().getFileStreamPath(filename).absolutePath
     }
 
-    private fun setPicture(step: Step, view: View) {
-        view.findViewById<ImageView>(ru.netology.nerecipe.R.id.addPictureStep).visibility = View.GONE
-        view.findViewById<ProgressBar>(ru.netology.nerecipe.R.id.progressBar).visibility = View.VISIBLE
+    private fun setStepPicture(step: Step, view: View) {
+        view.findViewById<ImageView>(R.id.addPictureStep).visibility = View.GONE
+        view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
         Glide.with(view)
             .load("https://loremflickr.com/480/480/food?random=${(1..1000).random()}")
             .into(object : CustomTarget<Drawable>() {
@@ -217,8 +221,8 @@ class NewOrEditRecipeFragment : Fragment() {
 
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
-                    view.findViewById<ImageView>(ru.netology.nerecipe.R.id.addPictureStep).visibility = View.VISIBLE
-                    view.findViewById<ProgressBar>(ru.netology.nerecipe.R.id.progressBar).visibility = View.GONE
+                    view.findViewById<ImageView>(R.id.addPictureStep).visibility = View.VISIBLE
+                    view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                     Toast.makeText(context, "Упс...", Toast.LENGTH_SHORT).show()
                 }
 
@@ -226,13 +230,11 @@ class NewOrEditRecipeFragment : Fragment() {
                     resource: Drawable,
                     transition: Transition<in Drawable>?
                 ) {
-                    view.findViewById<ImageView>(ru.netology.nerecipe.R.id.addPictureStep).visibility = View.VISIBLE
-                    view.findViewById<ProgressBar>(ru.netology.nerecipe.R.id.progressBar).visibility = View.GONE
-                    view.findViewById<ImageView>(ru.netology.nerecipe.R.id.editablePictureStep).setImageDrawable(resource)
+                    view.findViewById<ImageView>(R.id.addPictureStep).visibility = View.VISIBLE
+                    view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
+                    view.findViewById<ImageView>(R.id.editablePictureStep).setImageDrawable(resource)
                     viewModel.clickedSaveCurrentStep(
-                        step.copy(
-                            picture = savePicture(view.findViewById(ru.netology.nerecipe.R.id.editablePictureStep))
-                        )
+                        step.copy(picture = convertImage(resource))
                     )
                 }
             })

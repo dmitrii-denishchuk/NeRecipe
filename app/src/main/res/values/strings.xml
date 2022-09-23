@@ -24,8 +24,8 @@
     <string name="author">Author</string>
     <string name="category">Category</string>
     <string name="recipe_title">Recipe title</string>
-    <string name="step">Step</string>
-    <string name="content">Content</string>
+    <string name="give_a_name_to_the_step">Give a name to the step</string>
+    <string name="describe_the_step_in_detail">Describe the step in detail</string>
     <string name="add_step_picture">Add step picture</string>
     <string name="think_of_a_name">Think of a name</string>
     <string name="add_recipe_picture">Add recipe picture</string>

@@ -76,7 +76,9 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="36dp"
+            android:contentDescription="@string/category"
+            android:minHeight="48dp"
+            android:background="?attr/colorPrimaryVariant"
             app:layout_constraintEnd_toEndOf="@id/editableHeadRecipeCard"
             app:layout_constraintStart_toStartOf="@id/editableHeadRecipeCard"
             app:layout_constraintTop_toBottomOf="@id/editableHeadRecipeCard" />
@@ -86,7 +88,6 @@
         android:id="@+id/editableStepsRecipe"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"

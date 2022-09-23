@@ -2,10 +2,11 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/spacing_12dp"
-    android:backgroundTint="?attr/colorPrimary"
+    android:backgroundTint="?attr/colorPrimaryVariant"
     app:cardCornerRadius="@dimen/spacing_12dp"
     app:cardElevation="@dimen/elevation_4dp">
 
@@ -18,11 +19,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_12dp"
-            android:autofillHints="@string/step"
+            android:autofillHints="@string/give_a_name_to_the_step"
             android:background="@null"
             android:enabled="true"
-            android:hint="@string/step"
+            android:hint="@string/give_a_name_to_the_step"
             android:inputType="textCapSentences"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:minHeight="@dimen/user_avatar_48dp"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -64,16 +67,15 @@
                             app:cardCornerRadius="@dimen/spacing_12dp"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <EditText
+                            <com.uncopt.android.widget.text.justify.JustifiedEditText
                                 android:id="@+id/editableContentStep"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:autofillHints="@string/content"
+                                android:autofillHints="@string/describe_the_step_in_detail"
                                 android:background="@null"
-                                android:gravity="fill_horizontal|center"
-                                android:hint="@string/content"
+                                android:hint="@string/describe_the_step_in_detail"
                                 android:inputType="textCapSentences|textMultiLine"
-                                android:justificationMode="inter_word"
+                                tools:text="@tools:sample/lorem/random"
                                 android:minHeight="48dp"
                                 android:padding="4dp" />
                         </com.google.android.material.card.MaterialCardView>
@@ -83,9 +85,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-48dp"
-                            android:background="?attr/colorPrimaryVariant"
+                            android:background="?attr/colorOnPrimary"
                             android:contentDescription="@string/preview"
-                            android:minHeight="180dp"
+                            android:minHeight="@dimen/card_size_180dp"
                             android:scaleType="centerCrop"
                             app:layout_constraintTop_toBottomOf="@id/editableContentCard" />
 
@@ -93,7 +95,7 @@
                             android:id="@+id/progressBar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:indeterminateTint="@color/primaryDarkColor"
+                            android:indeterminateTint="?attr/colorSecondary"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

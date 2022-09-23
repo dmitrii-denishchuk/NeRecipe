@@ -25,9 +25,9 @@
     <string name="author">Автор</string>
     <string name="category">Категория</string>
     <string name="recipe_title">Название рецепта</string>
-    <string name="step">Шаг</string>
-    <string name="content">Содержимое</string>
     <string name="add_step_picture">Добавить картинку шага</string>
     <string name="think_of_a_name">Придумай название</string>
     <string name="add_recipe_picture">Добавь картинку рецепта</string>
+    <string name="give_a_name_to_the_step">Дай название шагу</string>
+    <string name="describe_the_step_in_detail">Опиши шаг подробно</string>
 </resources>

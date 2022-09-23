@@ -34,7 +34,6 @@ class ViewRecipeFragment : Fragment() {
         val viewModel: ViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         binding.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-        recycler.visibility = View.VISIBLE
 
         val contentAdapter = ContentAdapter(object : OnStartDragListener {
             override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {

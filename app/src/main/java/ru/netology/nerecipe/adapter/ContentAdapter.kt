@@ -80,15 +80,28 @@ class ContentAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var step: Step
+        private var timer = Timer()
 
         init {
-            binding.editableTitleStep.addTextChangedListener(
-                afterTextChanged = { clickListener?.clickedEnterText(step.copy(title = it.toString())) }
-            )
+            binding.editableTitleStep.addTextChangedListener {
+                timer.cancel()
+                timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        clickListener?.clickedEnterText(step.copy(title = it.toString()))
+                    }
+                }, 300)
+            }
 
-            binding.editableContentStep.addTextChangedListener(
-                afterTextChanged = { clickListener?.clickedEnterText(step.copy(content = it.toString())) }
-            )
+            binding.editableContentStep.addTextChangedListener {
+                timer.cancel()
+                timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        clickListener?.clickedEnterText(step.copy(content = it.toString()))
+                    }
+                }, 300)
+            }
 
             binding.addPictureStep.setOnClickListener {
                 clickListener?.clickedAddPicture(step)
@@ -111,14 +124,16 @@ class ContentAdapter(
                     Selection.setSelection(editableText, editableText.length)
                 }
                 editablePictureStep.setImageBitmap(BitmapFactory.decodeFile(step.picture))
-                if (binding.editableTitleStep.text.isEmpty() || binding.editableContentStep.text.isEmpty() && step.id == 1000) {
-                    addOrRemoveStep.visibility = View.INVISIBLE
-                } else if ((binding.editableTitleStep.text.isNotEmpty() || binding.editableContentStep.text.isNotEmpty()) && (step.id == 1000)) {
-                    addOrRemoveStep.visibility = View.VISIBLE
-                    addOrRemoveStep.setIconResource(R.drawable.ic_baseline_add_24)
-                } else if (binding.editableTitleStep.text.isNotEmpty() || binding.editableContentStep.text.isNotEmpty() && step.id != 1000) {
-                    addOrRemoveStep.setIconResource(R.drawable.ic_baseline_close_24)
-                    addOrRemoveStep.visibility = View.VISIBLE
+                with(binding.addOrRemoveStep) {
+                    if (binding.editableTitleStep.text.isEmpty() || binding.editableContentStep.text.isEmpty() && step.id == 1000) {
+                        visibility = View.INVISIBLE
+                    } else if ((binding.editableTitleStep.text.isNotEmpty() || binding.editableContentStep.text.isNotEmpty()) && (step.id == 1000)) {
+                        visibility = View.VISIBLE
+                        setIconResource(R.drawable.ic_baseline_add_24)
+                    } else if (binding.editableTitleStep.text.isNotEmpty() || binding.editableContentStep.text.isNotEmpty() && step.id != 1000) {
+                        setIconResource(R.drawable.ic_baseline_close_24)
+                        visibility = View.VISIBLE
+                    }
                 }
             }
         }

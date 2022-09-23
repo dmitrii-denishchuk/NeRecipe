@@ -1,6 +1,7 @@
 package ru.netology.nerecipe.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -33,6 +34,14 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_book -> navView.visibility = View.VISIBLE
+                R.id.navigation_favorite -> navView.visibility = View.VISIBLE
+                else -> navView.visibility = View.GONE
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

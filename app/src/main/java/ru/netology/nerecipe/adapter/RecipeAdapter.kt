@@ -1,13 +1,18 @@
 package ru.netology.nerecipe.adapter
 
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import ru.netology.nerecipe.R
 import ru.netology.nerecipe.clickListeners.RecipeClickListeners
 import ru.netology.nerecipe.databinding.FragmentViewRecipeBinding
@@ -98,14 +103,33 @@ class RecipeAdapter(
         fun bind(recipe: Recipe) {
             this.recipe = recipe
             with(binding) {
+                Glide.with(userAvatar.context)
+                    .load("https://loremflickr.com/100/100/face?random=${(1..1000).random()}")
+                    .circleCrop()
+                    .into(object : CustomTarget<Drawable>() {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable>?
+                        ) {
+                            userAvatar.setImageDrawable(resource)
+                            ImageViewCompat.setImageTintList(userAvatar, null)
+                        }
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            userAvatar.setImageResource(R.drawable.ic_baseline_person_24)
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+                    })
                 recipeViewTitle.text = recipe.title
                 recipeViewCategory.text = recipe.category
                 author.text = recipe.author
                 favoriteButton.isChecked = recipe.isFavorite
-                if (recipe.picture == "") {
-                    editablePictureRecipe.setImageResource(R.drawable.ic_launcher_foreground)
-                    editablePictureRecipe.scaleType = ImageView.ScaleType.FIT_CENTER
-                }
+                if (recipe.picture == "")
+                    with(editablePictureRecipe) {
+                        setImageResource(R.drawable.ic_launcher_foreground)
+                        scaleType = ImageView.ScaleType.FIT_CENTER
+                    }
                 else
                     editablePictureRecipe.setImageBitmap(BitmapFactory.decodeFile(recipe.picture))
             }

@@ -3,33 +3,34 @@
     <style name="Theme.NeRecipe"
         parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/primaryLightColor</item>
+        <item name="colorPrimary">@color/primaryDarkColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnPrimary">@color/primaryColor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">?attr/colorOnSecondary</item>
-        <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Primary</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="actionBarStyle">@style/Widget.AppTheme.actionBar</item>
     </style>
 
-    <style name="Widget.AppTheme.author"
-        parent="Widget.MaterialComponents.Button.TextButton.Icon">
-        <item name="icon">@drawable/ic_baseline_person_24</item>
-        <item name="iconTint">@color/other_buttons_tint</item>
-        <item name="rippleColor">@android:color/transparent</item>
-        <item name="backgroundTint">@android:color/transparent</item>
-        <item name="iconPadding">0dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:minWidth">@dimen/user_avatar_48dp</item>
-        <item name="android:minHeight">@dimen/user_avatar_48dp</item>
+    <style name="Widget.AppTheme.actionBar"
+        parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="android:elevation">@dimen/spacing_12dp</item>
+        <item name="android:paddingTop">@dimen/spacing_12dp</item>
+        <item name="android:paddingHorizontal">@dimen/spacing_12dp</item>
+    </style>
+
+    <style name="Widget.AppTheme.bottomNavigation"
+        parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="itemIconTint">@color/bottom_bar_buttons_tint</item>
+        <item name="android:layout_margin">@dimen/spacing_12dp</item>
+        <item name="android:elevation">@dimen/spacing_12dp</item>
     </style>
 
     <style name="Widget.AppTheme.favoriteButton"
@@ -41,8 +42,8 @@
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">@dimen/spacing_12dp</item>
+        <item name="android:paddingRight">@dimen/spacing_12dp</item>
         <item name="android:minWidth">@dimen/user_avatar_48dp</item>
         <item name="android:minHeight">@dimen/user_avatar_48dp</item>
     </style>
@@ -50,27 +51,27 @@
     <style name="Widget.AppTheme.menuButton"
         parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="icon">@drawable/ic_baseline_menu_24</item>
-        <item name="iconTint">@color/other_buttons_tint</item>
+        <item name="iconTint">?attr/colorControlNormal</item>
         <item name="rippleColor">@android:color/transparent</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="iconPadding">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">@dimen/spacing_12dp</item>
+        <item name="android:paddingRight">@dimen/spacing_12dp</item>
         <item name="android:minWidth">@dimen/user_avatar_48dp</item>
         <item name="android:minHeight">@dimen/user_avatar_48dp</item>
     </style>
 
     <style name="Widget.AppTheme.removeOrAddContent"
         parent="Widget.MaterialComponents.Button.TextButton.Icon">
-        <item name="iconTint">@color/other_buttons_tint</item>
+        <item name="iconTint">?attr/colorControlNormal</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="iconPadding">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">@dimen/spacing_12dp</item>
+        <item name="android:paddingRight">@dimen/spacing_12dp</item>
         <item name="android:minWidth">@dimen/user_avatar_48dp</item>
         <item name="android:minHeight">@dimen/user_avatar_48dp</item>
     </style>
