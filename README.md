@@ -23,6 +23,6 @@
 * Room
 
 ## Результат
-> <img src="https://user-images.githubusercontent.com/101312150/192999292-7c2fe63c-64ae-48ff-b763-afc208f3748c.png" width="300"/>
-> <img src="https://user-images.githubusercontent.com/101312150/192999043-0a7b0c94-3c01-40a0-9860-c6f2f6a9e4b9.png" width="300"/>
-> <img src="https://user-images.githubusercontent.com/101312150/192987917-5c3e63e2-90e1-4669-87ef-c0dfa9cee6fe.png" width="300"/>
+> <img src="https://user-images.githubusercontent.com/101312150/192999292-7c2fe63c-64ae-48ff-b763-afc208f3748c.png" width="250"/>
+> <img src="https://user-images.githubusercontent.com/101312150/192999043-0a7b0c94-3c01-40a0-9860-c6f2f6a9e4b9.png" width="250"/>
+> <img src="https://user-images.githubusercontent.com/101312150/192987917-5c3e63e2-90e1-4669-87ef-c0dfa9cee6fe.png" width="250"/>
